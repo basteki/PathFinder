@@ -12,7 +12,12 @@ import java.nio.file.Paths;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import graphHandler.*;
+import graphHandler.domain.*;
+import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,14 +25,10 @@ import java.util.List;
  */
 public class MainGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainGUI
-     */
     public MainGUI() {
         initComponents();
-        
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,7 +38,6 @@ public class MainGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mainPanel = new javax.swing.JPanel();
         startButton = new javax.swing.JButton();
         generateButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
@@ -45,30 +45,56 @@ public class MainGUI extends javax.swing.JFrame {
         graphLabel1 = new javax.swing.JLabel();
         threadLabel = new javax.swing.JLabel();
         threadComboBox1 = new javax.swing.JComboBox();
+        verticeNLabel = new javax.swing.JLabel();
+        verticeSlider = new javax.swing.JSlider();
+        startTextField = new javax.swing.JTextField();
+        endTextField = new javax.swing.JTextField();
+        startEndLabel = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        saveNameTextField = new javax.swing.JTextField();
+        saveLabel = new javax.swing.JLabel();
+        algorithmLabel2 = new javax.swing.JLabel();
+        algorithmTypeComboBox = new javax.swing.JComboBox();
+        algorithmTypeComboBox1 = new javax.swing.JComboBox();
+        algorithmTypeComboBox2 = new javax.swing.JComboBox();
+        algorithmTypeComboBox3 = new javax.swing.JComboBox();
+        optionButton = new javax.swing.JButton();
+        optionButton1 = new javax.swing.JButton();
+        optionButton3 = new javax.swing.JButton();
+        optionButton2 = new javax.swing.JButton();
+        algorithmLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        statsTextArea = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        statsTextArea2 = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        statsTextArea3 = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        statsTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 471, Short.MAX_VALUE)
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 437, Short.MAX_VALUE)
-        );
-
-        startButton.setText("Start");
+        startButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        startButton.setText("Szukaj");
         startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startButtonActionPerformed(evt);
             }
         });
 
-        generateButton.setText("Generuj");
+        generateButton.setText("Losuj");
+        generateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateButtonActionPerformed(evt);
+            }
+        });
 
         saveButton.setText("Zapisz");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         loadButton.setText("Wczytaj");
         loadButton.addActionListener(new java.awt.event.ActionListener() {
@@ -77,62 +103,272 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
+        graphLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         graphLabel1.setText("Graf:");
 
         threadLabel.setText("Równolegle:");
 
         threadComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4" }));
+        threadComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                threadComboBox1ActionPerformed(evt);
+            }
+        });
+
+        verticeNLabel.setText("L. węzłów do generacji");
+
+        verticeSlider.setMajorTickSpacing(250);
+        verticeSlider.setMaximum(601);
+        verticeSlider.setMinorTickSpacing(100);
+        verticeSlider.setPaintLabels(true);
+        verticeSlider.setPaintTicks(true);
+        verticeSlider.setValue(150);
+
+        startTextField.setText("1");
+        startTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startTextFieldActionPerformed(evt);
+            }
+        });
+
+        endTextField.setText("2");
+        endTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                endTextFieldActionPerformed(evt);
+            }
+        });
+
+        startEndLabel.setText("Początek i koniec szukanej trasy");
+
+        saveNameTextField.setText("MyGraph");
+        saveNameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveNameTextFieldActionPerformed(evt);
+            }
+        });
+
+        saveLabel.setText("Nazwa pliku do zapisu");
+
+        algorithmLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        algorithmLabel2.setText("Wyniki:");
+
+        algorithmTypeComboBox.setForeground(new java.awt.Color(0, 51, 255));
+        algorithmTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dijkstra", "A*", "Bellman-Ford", "Mrówkowy", "Genetyczny", "Zachłanny" }));
+
+        algorithmTypeComboBox1.setForeground(new java.awt.Color(0, 255, 51));
+        algorithmTypeComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A*", "Dijkstra", "Bellman-Ford", "Mrówkowy", "Genetyczny", "Zachłanny" }));
+        algorithmTypeComboBox1.setEnabled(false);
+
+        algorithmTypeComboBox2.setForeground(new java.awt.Color(255, 102, 0));
+        algorithmTypeComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Mrówkowy", "Dijkstra", "A*", "Bellman-Ford", "Genetyczny", "Zachłanny" }));
+        algorithmTypeComboBox2.setEnabled(false);
+
+        algorithmTypeComboBox3.setForeground(new java.awt.Color(153, 0, 153));
+        algorithmTypeComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Genetyczny", "Dijkstra", "A*", "Bellman-Ford", "Mrówkowy", "Genetyczny", "Zachłanny" }));
+        algorithmTypeComboBox3.setEnabled(false);
+
+        optionButton.setText("Opcje");
+
+        optionButton1.setText("Opcje");
+        optionButton1.setEnabled(false);
+
+        optionButton3.setText("Opcje");
+        optionButton3.setEnabled(false);
+
+        optionButton2.setText("Opcje");
+        optionButton2.setEnabled(false);
+
+        algorithmLabel3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        algorithmLabel3.setText("Algorytmy:");
+
+        statsTextArea.setColumns(20);
+        statsTextArea.setFont(new java.awt.Font("Monospaced", 0, 10)); // NOI18N
+        statsTextArea.setRows(5);
+        statsTextArea.setText("Czas\nZnaleziona trasa\nDługość trasy\nIlość operacji\n\"Odwiedzone\" węzły");
+        jScrollPane1.setViewportView(statsTextArea);
+
+        statsTextArea2.setColumns(20);
+        statsTextArea2.setFont(new java.awt.Font("Monospaced", 0, 10)); // NOI18N
+        statsTextArea2.setRows(5);
+        statsTextArea2.setText("Czas\nZnaleziona trasa\nDługość trasy\nIlość operacji\n\"Odwiedzone\" węzły");
+        jScrollPane2.setViewportView(statsTextArea2);
+
+        statsTextArea3.setColumns(20);
+        statsTextArea3.setFont(new java.awt.Font("Monospaced", 0, 10)); // NOI18N
+        statsTextArea3.setRows(5);
+        statsTextArea3.setText("Czas\nZnaleziona trasa\nDługość trasy\nIlość operacji\n\"Odwiedzone\" węzły");
+        jScrollPane3.setViewportView(statsTextArea3);
+
+        statsTextArea1.setColumns(20);
+        statsTextArea1.setFont(new java.awt.Font("Monospaced", 0, 10)); // NOI18N
+        statsTextArea1.setRows(5);
+        statsTextArea1.setText("Czas\nZnaleziona trasa\nDługość trasy\nIlość operacji\n\"Odwiedzone\" węzły");
+        jScrollPane4.setViewportView(statsTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(threadLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(threadComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(182, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(graphLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(generateButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(saveButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(loadButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(278, 278, 278))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(verticeNLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(saveNameTextField)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(saveLabel)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(startEndLabel)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(startTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(endTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(verticeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(65, 65, 65)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(algorithmTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(optionButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(threadLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(threadComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(algorithmTypeComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(optionButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(algorithmTypeComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(optionButton2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(algorithmTypeComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(optionButton3)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(graphLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(algorithmLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(335, 335, 335))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(algorithmLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(115, 115, 115)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(algorithmLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(graphLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(algorithmLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(threadLabel)
+                    .addComponent(threadComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(3, 3, 3)
+                .addComponent(verticeNLabel)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(threadLabel)
-                            .addComponent(threadComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(graphLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(verticeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(generateButton)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(optionButton)
+                                .addComponent(algorithmTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(generateButton)
-                        .addComponent(saveButton)
-                        .addComponent(loadButton)))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(algorithmTypeComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(optionButton1))
+                                .addGap(63, 63, 63))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(saveLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(saveNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(saveButton))
+                                .addGap(30, 30, 30)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(loadButton)
+                                    .addComponent(algorithmTypeComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(optionButton2))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                                        .addComponent(startEndLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(startTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(endTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap())
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(62, 62, 62)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(algorithmTypeComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(optionButton3))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         pack();
@@ -156,11 +392,74 @@ public class MainGUI extends javax.swing.JFrame {
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             path = Paths.get(openFileChooser.getSelectedFile().getPath());
             pathString = path.toString();
-            List<String> one = Loader.load(pathString);
-            System.out.println(one);
-            System.out.println(pathString);
+
+            PathFinder.graph = Loader.load(pathString);
+            PathFinder.graphUI.reset();
         }
     }//GEN-LAST:event_loadButtonActionPerformed
+
+    private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
+        PathFinder.graph= Generator.generate(verticeSlider.getValue());
+        PathFinder.graphUI.reset();
+    }//GEN-LAST:event_generateButtonActionPerformed
+
+    private void startTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_startTextFieldActionPerformed
+
+    private void endTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_endTextFieldActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        try {
+            Saver.save(saveNameTextField.getText(), PathFinder.graph);
+        } catch (IOException ex) {
+            Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void saveNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveNameTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveNameTextFieldActionPerformed
+
+    private void threadComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threadComboBox1ActionPerformed
+        if(threadComboBox1.getSelectedIndex() == 0){
+            algorithmTypeComboBox1.setEnabled(false);
+            optionButton1.setEnabled(false);
+            algorithmTypeComboBox2.setEnabled(false);
+            optionButton2.setEnabled(false);
+            algorithmTypeComboBox3.setEnabled(false);
+            optionButton3.setEnabled(false);
+        }
+        if(threadComboBox1.getSelectedIndex() == 1){
+            algorithmTypeComboBox1.setEnabled(true);
+            optionButton1.setEnabled(true);
+            algorithmTypeComboBox2.setEnabled(false);
+            optionButton2.setEnabled(false);
+            algorithmTypeComboBox3.setEnabled(false);
+            optionButton3.setEnabled(false);
+
+        }
+        if(threadComboBox1.getSelectedIndex() == 2){
+            algorithmTypeComboBox1.setEnabled(true);
+            optionButton1.setEnabled(true);
+            algorithmTypeComboBox2.setEnabled(true);
+            optionButton2.setEnabled(true);
+            algorithmTypeComboBox3.setEnabled(false);
+            optionButton3.setEnabled(false);
+
+        }
+        if(threadComboBox1.getSelectedIndex() == 3){
+            algorithmTypeComboBox1.setEnabled(true);
+            optionButton1.setEnabled(true);
+            algorithmTypeComboBox2.setEnabled(true);
+            optionButton2.setEnabled(true);
+            algorithmTypeComboBox3.setEnabled(true);
+            optionButton3.setEnabled(true);
+
+        }
+    }//GEN-LAST:event_threadComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -190,6 +489,8 @@ public class MainGUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainGUI().setVisible(true);
@@ -198,13 +499,38 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel algorithmLabel2;
+    private javax.swing.JLabel algorithmLabel3;
+    private javax.swing.JComboBox algorithmTypeComboBox;
+    private javax.swing.JComboBox algorithmTypeComboBox1;
+    private javax.swing.JComboBox algorithmTypeComboBox2;
+    private javax.swing.JComboBox algorithmTypeComboBox3;
+    private javax.swing.JTextField endTextField;
     private javax.swing.JButton generateButton;
     private javax.swing.JLabel graphLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton loadButton;
-    private javax.swing.JPanel mainPanel;
+    private javax.swing.JButton optionButton;
+    private javax.swing.JButton optionButton1;
+    private javax.swing.JButton optionButton2;
+    private javax.swing.JButton optionButton3;
     private javax.swing.JButton saveButton;
+    private javax.swing.JLabel saveLabel;
+    private javax.swing.JTextField saveNameTextField;
     private javax.swing.JButton startButton;
+    private javax.swing.JLabel startEndLabel;
+    private javax.swing.JTextField startTextField;
+    private javax.swing.JTextArea statsTextArea;
+    private javax.swing.JTextArea statsTextArea1;
+    private javax.swing.JTextArea statsTextArea2;
+    private javax.swing.JTextArea statsTextArea3;
     private javax.swing.JComboBox threadComboBox1;
     private javax.swing.JLabel threadLabel;
+    private javax.swing.JLabel verticeNLabel;
+    private javax.swing.JSlider verticeSlider;
     // End of variables declaration//GEN-END:variables
 }

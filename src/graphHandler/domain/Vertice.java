@@ -1,50 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package graphHandler.domain;
 
 import java.util.List;
 
-/**
- *
- * @author Idavor
- */
 public class Vertice {
-    int id;
-    int x;
-    int y;
-    private List<Edge> connected;
-    double weight;
-    
-    public void setId(int id){
+
+    public int id;
+    public int x;
+    public int y;
+    public int[] connected;
+    public Double weight;
+
+        
+    public void setId(int id) {
         this.id = id;
     }
-    public void setX(int x){
-        this.x = x;
-    }
-    public void setY(int y){
-        this.y = y;
-    }
-    
-    public void setConnected(List<Edge>  connected){
-        this.connected = connected;
-    }
-    
-    public void setWeight(int weight){
-        this.weight = weight;
-    }
-    
-    public int getId(){
+
+    public int getId() {
         return this.id;
     }
-    
-    public List<Edge> getConnected(){
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
+    public void setConnected(int[] connected) {
+        this.connected = connected;
+    }
+
+    public int[] getConnected() {
         return this.connected;
     }
-    
-    public double getWeight(){
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public double getWeight() {
         return this.weight;
     }
 }
