@@ -8,7 +8,7 @@ public class Vertice {
     public int id;
     public int x;
     public int y;
-    public int[] connected;
+    public List<Integer> connected;
     public Double weight;
 
         
@@ -36,11 +36,11 @@ public class Vertice {
         return this.y;
     }
 
-    public void setConnected(int[] connected) {
+    public void setConnected(List<Integer> connected) {
         this.connected = connected;
     }
 
-    public int[] getConnected() {
+    public List<Integer> getConnected() {
         return this.connected;
     }
 

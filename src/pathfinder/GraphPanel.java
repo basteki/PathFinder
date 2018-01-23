@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.image.ImageObserver;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,11 +19,11 @@ import java.awt.image.ImageObserver;
  */
 public class GraphPanel extends javax.swing.JFrame {
 
-    
     private double bM /*boundaryMultiplier*/ = 1.0;
     private int boundaryX = 500;
     private int boundaryY = 500;
     private int ovalSize = 6;
+
     /**
      * Creates new form GraphPanel
      */
@@ -41,9 +42,9 @@ public class GraphPanel extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(510, 510));
+        setPreferredSize(new java.awt.Dimension(600, 600));
         setResizable(false);
-        setSize(new java.awt.Dimension(500, 500));
+        setSize(new java.awt.Dimension(600, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -58,8 +59,6 @@ public class GraphPanel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-
 
     /**
      * @param args the command line arguments
@@ -96,16 +95,18 @@ public class GraphPanel extends javax.swing.JFrame {
             }
         });
     }
-    public void reset(){
+
+    public void reset() {
         initComponents();
         bM = 1.0;
         ovalSize = 6;
         boundaryX = 500;
         boundaryY = 500;
+        
     }
+
     public void paint(Graphics g) {
         int i = 0;
-        
 
         while (i < PathFinder.graph.verticesList.size()) {
 
@@ -113,7 +114,7 @@ public class GraphPanel extends javax.swing.JFrame {
 
                 g.clearRect(0, 0, 10000, 10000);
                 if (PathFinder.graph.verticesList.get(i).x > PathFinder.graph.verticesList.get(i).y) {
-                    
+
                     if (PathFinder.graph.verticesList.get(i).x > boundaryX) {
                         bM = bM * boundaryX / (PathFinder.graph.verticesList.get(i).x);
                         boundaryX = (PathFinder.graph.verticesList.get(i).x);
@@ -125,7 +126,7 @@ public class GraphPanel extends javax.swing.JFrame {
                         boundaryX = (PathFinder.graph.verticesList.get(i).y);
                     }
                 } else {
-                    
+
                     if (PathFinder.graph.verticesList.get(i).x > boundaryX) {
                         bM = bM * boundaryX / (PathFinder.graph.verticesList.get(i).x);
                         boundaryX = (PathFinder.graph.verticesList.get(i).x);
@@ -141,22 +142,38 @@ public class GraphPanel extends javax.swing.JFrame {
                 i = 0;
             }
             g.setColor(Color.BLUE);
-            g.setFont(new Font("TimesRoman", Font.PLAIN, (int)(20*(0.3+bM)))); 
-            g.drawString(Integer.toString(i), (int) (PathFinder.graph.verticesList.get(i).x * bM) - 3, (int) (PathFinder.graph.verticesList.get(i).y * bM -6));
-            g.setColor(Color.BLACK);
-            g.drawOval((int) (PathFinder.graph.verticesList.get(i).x * bM)-3, (int) (PathFinder.graph.verticesList.get(i).y * bM)-3, (int)(ovalSize), (int)(ovalSize));
+            g.setFont(new Font("TimesRoman", Font.PLAIN, (int) (20 * (0.3 + bM))));
+            g.drawString(Integer.toString(i), (int) (PathFinder.graph.verticesList.get(i).x * bM + 50) - 3, (int) (PathFinder.graph.verticesList.get(i).y * bM+ 50 - 6));
+
+           
+                g.setColor(Color.BLACK);
+            
+
+            g.drawOval((int) (PathFinder.graph.verticesList.get(i).x * bM + 50) - 3, (int) (PathFinder.graph.verticesList.get(i).y * bM + 50) - 3, (int) (ovalSize), (int) (ovalSize));
 
             i++;
         }
-        i=0;
+        i = 0;
         while (i < PathFinder.graph.edgesList.size()) {
-            g.drawLine((int)(PathFinder.graph.verticesList.get( PathFinder.graph.edgesList.get(i).getA() ).x *bM),
-                    (int)(PathFinder.graph.verticesList.get( PathFinder.graph.edgesList.get(i).getA() ).y *bM),
-                    (int)(PathFinder.graph.verticesList.get( PathFinder.graph.edgesList.get(i).getB() ).x *bM),
-                    (int)(PathFinder.graph.verticesList.get( PathFinder.graph.edgesList.get(i).getB() ).y *bM));
+ 
+            g.drawLine((int) (PathFinder.graph.verticesList.get(PathFinder.graph.edgesList.get(i).getA()).x * bM + 50),
+                    (int) (PathFinder.graph.verticesList.get(PathFinder.graph.edgesList.get(i).getA()).y * bM + 50),
+                    (int) (PathFinder.graph.verticesList.get(PathFinder.graph.edgesList.get(i).getB()).x * bM + 50),
+                    (int) (PathFinder.graph.verticesList.get(PathFinder.graph.edgesList.get(i).getB()).y * bM + 50));
             i++;
         }
+        for (int j = 0; j < PathFinder.path.size() - 1; j++) {
+            System.out.println(PathFinder.path.get(j));
+            g.setColor(Color.RED);
+                        g.drawLine((int) (PathFinder.graph.verticesList.get(PathFinder.path.get(j)).x * bM + 50),
+                                    (int) (PathFinder.graph.verticesList.get(PathFinder.path.get(j)).y * bM + 50 ),
+                                    (int) (PathFinder.graph.verticesList.get(PathFinder.path.get(j+1)).x * bM + 50),
+                                    (int) (PathFinder.graph.verticesList.get(PathFinder.path.get(j+1)).y * bM + 50));
+        }
+        
+        
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

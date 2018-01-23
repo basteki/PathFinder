@@ -5,6 +5,7 @@
  */
 package pathfinder;
 
+import algorithms.Dijkstra;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -28,7 +29,7 @@ public class MainGUI extends javax.swing.JFrame {
     public MainGUI() {
         initComponents();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -312,9 +313,9 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(verticeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(generateButton)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(generateButton)
+                            .addComponent(verticeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -375,19 +376,27 @@ public class MainGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        // TODO add your handling code here:
+        if (algorithmTypeComboBox.getSelectedIndex() == 0) {
+            Dijkstra dij = new Dijkstra();
+            PathFinder.path = dij.findWay(
+                    Integer.parseInt(startTextField.getText()),
+                    Integer.parseInt(endTextField.getText()),
+                    PathFinder.graph);
+        }
+
+        PathFinder.graphUI.reset();
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
-        
+
         JFileChooser openFileChooser;
         Path path;
         String pathString;
-        
+
         openFileChooser = new JFileChooser();
-        
+
         openFileChooser.setCurrentDirectory(new File("d:\\"));
-        
+
         int returnValue = openFileChooser.showOpenDialog(this);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             path = Paths.get(openFileChooser.getSelectedFile().getPath());
@@ -399,8 +408,9 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_loadButtonActionPerformed
 
     private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
-        PathFinder.graph= Generator.generate(verticeSlider.getValue());
+        PathFinder.graph = Generator.generate(verticeSlider.getValue());
         PathFinder.graphUI.reset();
+        PathFinder.path = new ArrayList<Integer>();
     }//GEN-LAST:event_generateButtonActionPerformed
 
     private void startTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTextFieldActionPerformed
@@ -424,7 +434,7 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_saveNameTextFieldActionPerformed
 
     private void threadComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threadComboBox1ActionPerformed
-        if(threadComboBox1.getSelectedIndex() == 0){
+        if (threadComboBox1.getSelectedIndex() == 0) {
             algorithmTypeComboBox1.setEnabled(false);
             optionButton1.setEnabled(false);
             algorithmTypeComboBox2.setEnabled(false);
@@ -432,7 +442,7 @@ public class MainGUI extends javax.swing.JFrame {
             algorithmTypeComboBox3.setEnabled(false);
             optionButton3.setEnabled(false);
         }
-        if(threadComboBox1.getSelectedIndex() == 1){
+        if (threadComboBox1.getSelectedIndex() == 1) {
             algorithmTypeComboBox1.setEnabled(true);
             optionButton1.setEnabled(true);
             algorithmTypeComboBox2.setEnabled(false);
@@ -441,7 +451,7 @@ public class MainGUI extends javax.swing.JFrame {
             optionButton3.setEnabled(false);
 
         }
-        if(threadComboBox1.getSelectedIndex() == 2){
+        if (threadComboBox1.getSelectedIndex() == 2) {
             algorithmTypeComboBox1.setEnabled(true);
             optionButton1.setEnabled(true);
             algorithmTypeComboBox2.setEnabled(true);
@@ -450,7 +460,7 @@ public class MainGUI extends javax.swing.JFrame {
             optionButton3.setEnabled(false);
 
         }
-        if(threadComboBox1.getSelectedIndex() == 3){
+        if (threadComboBox1.getSelectedIndex() == 3) {
             algorithmTypeComboBox1.setEnabled(true);
             optionButton1.setEnabled(true);
             algorithmTypeComboBox2.setEnabled(true);
@@ -489,8 +499,6 @@ public class MainGUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainGUI().setVisible(true);

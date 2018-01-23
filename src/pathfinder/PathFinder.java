@@ -10,6 +10,8 @@ import graphHandler.domain.Graph;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
@@ -20,6 +22,7 @@ import javax.swing.JFrame;
 public class PathFinder {
 
     public static Graph graph;
+    public static List<Integer> path = new ArrayList<>();
     
     public static pathfinder.MainGUI gui = new pathfinder.MainGUI();
     public static    pathfinder.GraphPanel graphUI = new pathfinder.GraphPanel();

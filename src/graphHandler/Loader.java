@@ -9,10 +9,7 @@ import graphHandler.domain.*;
 import pathfinder.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.lang.Math.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import static java.util.Arrays.asList;
 import java.util.List;
 
 public class Loader {
@@ -21,17 +18,20 @@ public class Loader {
         List<String> verticesParsingList = new ArrayList<String>();
         List<String> edgesParsingList = new ArrayList<String>();
         Graph G = new Graph();
-
+        
+        boolean edgeParse = false; 
+       
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
-          
+
             String line;
             while ((line = reader.readLine()) != null) {
 
                 if (line.contains("*")) {
                     verticesParsingList.add(line);
                 }
-                if (line.contains("/")) {
+                if (line.contains("/") || line.contains("=")) {
+                    edgeParse = true; 
                     edgesParsingList.add(line);
                 }
             }
@@ -39,15 +39,30 @@ public class Loader {
 
         } catch (Exception e) {
             System.err.format("Exception occurred trying to read '%s'.", fileName);
-            e.printStackTrace();
         }
 
         G.setVertices(parseVertices(verticesParsingList));
-       // if (edgesParsingList != null) {
-        //      G.setEdges(parseEdges(edgesParsingList));
-        // } else {
-        G.setEdges(parseEdgesFromConnected(G.verticesList));
-        // }
+        if (edgeParse) {
+            G.setEdges(parseEdges(edgesParsingList));
+        } else {
+            G.setEdges(parseEdgesFromConnected(G.verticesList));
+        }
+        
+    for(int i = 0; i<G.edgesList.size(); i++){
+        int A = G.edgesList.get(i).getA();
+        int B = G.edgesList.get(i).getB();
+        
+        if(G.verticesList.get( A ).connected.contains(B) ){
+            
+            G.verticesList.get( B ).connected.add(A);
+        }
+        if(G.verticesList.get( B ).connected.contains(A) ){
+            
+            G.verticesList.get( A ).connected.add(B);
+        }
+    }
+    
+        
         return G;
     }
 
@@ -68,14 +83,14 @@ public class Loader {
 
             String[] lineSplit = toParse.get(i).split(" ");
 
-            int connected[] = new int[10];
+            List<Integer> connected = new ArrayList<>();
             i2 = 5;
             nVert[i].setId(Integer.parseInt(lineSplit[1]));
             nVert[i].setX(Integer.parseInt(lineSplit[2]));
             nVert[i].setY(Integer.parseInt(lineSplit[3]));
 
             while (!lineSplit[i2].equals("}")) {
-                connected[i2 - 5] = Integer.parseInt(lineSplit[i2]);
+                connected.add(Integer.parseInt(lineSplit[i2]));
                 i2++;
             }
 
@@ -108,26 +123,30 @@ public class Loader {
         i = 0;
         List<Edge> retEdge = new ArrayList<Edge>();
 
-        if (toParse == null) {
-            return null;
-        }
-
         while (i < toParse.size()) {
 
             String[] lineSplit = toParse.get(i).split(" ");
 
             nEdge[i].setId(Integer.parseInt(lineSplit[1]));
             nEdge[i].setA(Integer.parseInt(lineSplit[2]));
-            nEdge[i].setB(Integer.parseInt(lineSplit[2]));
+            nEdge[i].setB(Integer.parseInt(lineSplit[3]));
 
-            if (!lineSplit[lineSplit.length - 1].equals("}")) {
-                nEdge[i].setWeight(Double.parseDouble(lineSplit[lineSplit.length - 1]));
+            if (lineSplit.length == 5) {
+                nEdge[i].setWeight(Double.parseDouble(lineSplit[lineSplit.length-1]));
             } else {
                 nEdge[i].setWeight(0);
             }
+            if(lineSplit[0] == "="){
+                nEdge[i].setOneWay(false);
+            }
+            else
+                nEdge[i].setOneWay(true);
+            
             retEdge.add(nEdge[i]);
-
+            i++;
         }
+        
+        
         return retEdge;
     }
 
@@ -138,19 +157,21 @@ public class Loader {
         int counter = 0;
         while (i < vertices.size()) {
             int i2 = 0;
-            while (i2 < vertices.get(i).connected.length) {
+            while (i2 < vertices.get(i).connected.size() ) {
 
-                if (vertices.get(i).connected[i2] != 0) {
+                if (vertices.get(i).connected.get(i2) != 0) {
                     Edge edge = new Edge();
                     edge.setA(vertices.get(i).id);
-                    edge.setB(vertices.get(i).connected[i2]);
+                    edge.setB(vertices.get(i).connected.get(i2));
 
-                    edge.setWeight(Math.hypot(vertices.get(i).x - vertices.get(vertices.get(i).connected[i2]).x, vertices.get(i).y - vertices.get(vertices.get(i).connected[i2]).y));
-
+                    edge.setWeight( Math.hypot(
+                            (vertices.get(i).x - vertices.get(vertices.get(i).connected.get(i2)).x),
+                            (vertices.get(i).y - vertices.get(vertices.get(i).connected.get(i2)).y) 
+                        ));
 
                     edge.setOneWay(false);
                     retEdge.add(edge);
-                   
+
                 }
                 i2++;
             }
