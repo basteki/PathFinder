@@ -10,14 +10,14 @@ import graphHandler.domain.Vertice;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import pathfinder.MainGUI;
 
 public class Dijkstra {
 
     public List<Integer> findWay(int start, int finish, Graph graph) {
-        System.out.println("Dijkstra start");
-        
-        List<Integer> path = new ArrayList<>();
 
+        List<Integer> path = new ArrayList<>();
+        
         int nVertice = graph.verticesList.size();
         boolean[] visited = new boolean[nVertice];
         double[] accWeights = new double[nVertice];
@@ -34,6 +34,7 @@ public class Dijkstra {
         accWeights[start] = 0.0;
 
         int currentStep = start;
+        int previousStep = start;
 
         while (currentStep != finish) {
             accWeights = weighConnected(visited, accWeights, graph, currentStep);
@@ -49,11 +50,12 @@ public class Dijkstra {
             
             visited[currentStep] = true;
             currentStep = lowestWeighId;
-            System.out.println("step: " + currentStep);
-            
+
         }
-        System.out.println("Dijkstra 1 faze end");
+
         path.add(currentStep);
+       
+        
         while (currentStep != start) {
             int lowestWeightId = -1;
             double lowestWeight = Double.POSITIVE_INFINITY;
@@ -61,9 +63,25 @@ public class Dijkstra {
             for (i = 0; i < graph.verticesList.get(currentStep).connected.size(); i++) {
                                 
                 int activeConnectedId = graph.verticesList.get(currentStep).connected.get(i);
+                double activeConnectionWeight = 0.0;
                 
-                if(accWeights[activeConnectedId] < lowestWeight && visited[activeConnectedId]){
-                    lowestWeight = accWeights[activeConnectedId];
+                for(int j = 0; j < graph.edgesList.size(); j++){
+                    if(graph.edgesList.get(j).getA() == activeConnectedId
+                            && graph.edgesList.get(j).getB() == currentStep ){
+                        activeConnectionWeight = graph.edgesList.get(j).getWeight();
+                        break;
+                    }
+                    if(graph.edgesList.get(j).getB() == activeConnectedId
+                            && graph.edgesList.get(j).getA() == currentStep ){
+                        activeConnectionWeight = graph.edgesList.get(j).getWeight();
+                        break;
+                    }
+                        
+                }
+                
+                
+                if(accWeights[activeConnectedId] + activeConnectionWeight < lowestWeight && visited[activeConnectedId]){
+                    lowestWeight = accWeights[activeConnectedId] + activeConnectionWeight;
                     lowestWeightId = activeConnectedId;
                 }
                 
@@ -72,17 +90,19 @@ public class Dijkstra {
                 System.out.println("Wystąpił bląd, sprawdź spójność grafu!");
             }
             path.add(lowestWeightId);
-            System.out.println("Krok " + lowestWeightId);
+
             currentStep = lowestWeightId;
         }
-        System.out.println("Dijkstra 2 faze end");
+
         Collections.reverse(path);
+        
+    
         return path;
     }
 
     private double[] weighConnected(boolean[] visited, double[] accWeights, Graph graph, int currentStep) {
         
-        System.out.println("Weighing connection start");
+
         
         int i = 0;
         
@@ -106,7 +126,6 @@ public class Dijkstra {
                 accWeights[activeConnectedId] = accWeights[currentStep] + graph.edgesList.get(activeEdgeId).getWeight() + graph.verticesList.get(activeConnectedId).weight;
             }
         }
-        System.out.println("Weighing connection end");
         
         return accWeights;
     }

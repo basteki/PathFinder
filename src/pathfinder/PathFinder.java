@@ -23,6 +23,9 @@ public class PathFinder {
 
     public static Graph graph;
     public static List<Integer> path = new ArrayList<>();
+    public static List<Integer> path1 = new ArrayList<>();
+    public static List<Integer> path2 = new ArrayList<>();
+    public static List<Integer> path3 = new ArrayList<>();
     
     public static pathfinder.MainGUI gui = new pathfinder.MainGUI();
     public static    pathfinder.GraphPanel graphUI = new pathfinder.GraphPanel();

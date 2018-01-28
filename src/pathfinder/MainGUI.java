@@ -5,6 +5,7 @@
  */
 package pathfinder;
 
+import algorithms.AntSwarm;
 import algorithms.Dijkstra;
 import java.io.File;
 import java.io.IOException;
@@ -19,12 +20,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 
 /**
  *
  * @author Idavor
  */
 public class MainGUI extends javax.swing.JFrame {
+
+    //TIME ; OPERATIONS ; LENGTH; PATH
+    public static String[][] stats = new String[4][4];
+
+    Options opt = new Options();
+    Options opt1 = new Options();
+    Options opt2 = new Options();
+    Options opt3 = new Options();
 
     public MainGUI() {
         initComponents();
@@ -153,31 +163,74 @@ public class MainGUI extends javax.swing.JFrame {
         algorithmLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         algorithmLabel2.setText("Wyniki:");
 
-        algorithmTypeComboBox.setForeground(new java.awt.Color(0, 51, 255));
+        algorithmTypeComboBox.setForeground(new java.awt.Color(255, 0, 0));
         algorithmTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dijkstra", "A*", "Bellman-Ford", "Mrówkowy", "Genetyczny", "Zachłanny" }));
+        algorithmTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                algorithmTypeComboBoxActionPerformed(evt);
+            }
+        });
 
-        algorithmTypeComboBox1.setForeground(new java.awt.Color(0, 255, 51));
-        algorithmTypeComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A*", "Dijkstra", "Bellman-Ford", "Mrówkowy", "Genetyczny", "Zachłanny" }));
+        algorithmTypeComboBox1.setForeground(new java.awt.Color(0, 153, 0));
+        algorithmTypeComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dijkstra", "A*", "Bellman-Ford", "Mrówkowy", "Genetyczny", "Zachłanny" }));
+        algorithmTypeComboBox1.setSelectedIndex(1);
         algorithmTypeComboBox1.setEnabled(false);
+        algorithmTypeComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                algorithmTypeComboBox1ActionPerformed(evt);
+            }
+        });
 
         algorithmTypeComboBox2.setForeground(new java.awt.Color(255, 102, 0));
-        algorithmTypeComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Mrówkowy", "Dijkstra", "A*", "Bellman-Ford", "Genetyczny", "Zachłanny" }));
+        algorithmTypeComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dijkstra", "A*", "Bellman-Ford", "Mrówkowy", "Genetyczny", "Zachłanny" }));
+        algorithmTypeComboBox2.setSelectedIndex(2);
         algorithmTypeComboBox2.setEnabled(false);
+        algorithmTypeComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                algorithmTypeComboBox2ActionPerformed(evt);
+            }
+        });
 
-        algorithmTypeComboBox3.setForeground(new java.awt.Color(153, 0, 153));
-        algorithmTypeComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Genetyczny", "Dijkstra", "A*", "Bellman-Ford", "Mrówkowy", "Genetyczny", "Zachłanny" }));
+        algorithmTypeComboBox3.setForeground(new java.awt.Color(0, 255, 255));
+        algorithmTypeComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dijkstra", "A*", "Bellman-Ford", "Mrówkowy", "Genetyczny", "Zachłanny" }));
+        algorithmTypeComboBox3.setSelectedIndex(3);
         algorithmTypeComboBox3.setEnabled(false);
+        algorithmTypeComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                algorithmTypeComboBox3ActionPerformed(evt);
+            }
+        });
 
         optionButton.setText("Opcje");
+        optionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optionButtonActionPerformed(evt);
+            }
+        });
 
         optionButton1.setText("Opcje");
         optionButton1.setEnabled(false);
+        optionButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optionButton1ActionPerformed(evt);
+            }
+        });
 
         optionButton3.setText("Opcje");
         optionButton3.setEnabled(false);
+        optionButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optionButton3ActionPerformed(evt);
+            }
+        });
 
         optionButton2.setText("Opcje");
         optionButton2.setEnabled(false);
+        optionButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optionButton2ActionPerformed(evt);
+            }
+        });
 
         algorithmLabel3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         algorithmLabel3.setText("Algorytmy:");
@@ -185,25 +238,25 @@ public class MainGUI extends javax.swing.JFrame {
         statsTextArea.setColumns(20);
         statsTextArea.setFont(new java.awt.Font("Monospaced", 0, 10)); // NOI18N
         statsTextArea.setRows(5);
-        statsTextArea.setText("Czas\nZnaleziona trasa\nDługość trasy\nIlość operacji\n\"Odwiedzone\" węzły");
+        statsTextArea.setText("Czas:\t\t\nIlość operacji:\nDługość trasy:\nZnaleziona trasa:");
         jScrollPane1.setViewportView(statsTextArea);
 
         statsTextArea2.setColumns(20);
         statsTextArea2.setFont(new java.awt.Font("Monospaced", 0, 10)); // NOI18N
         statsTextArea2.setRows(5);
-        statsTextArea2.setText("Czas\nZnaleziona trasa\nDługość trasy\nIlość operacji\n\"Odwiedzone\" węzły");
+        statsTextArea2.setText("Czas:\t\t\nIlość operacji:\nDługość trasy:\nZnaleziona trasa:");
         jScrollPane2.setViewportView(statsTextArea2);
 
         statsTextArea3.setColumns(20);
         statsTextArea3.setFont(new java.awt.Font("Monospaced", 0, 10)); // NOI18N
         statsTextArea3.setRows(5);
-        statsTextArea3.setText("Czas\nZnaleziona trasa\nDługość trasy\nIlość operacji\n\"Odwiedzone\" węzły");
+        statsTextArea3.setText("Czas:\t\t\nIlość operacji:\nDługość trasy:\nZnaleziona trasa:");
         jScrollPane3.setViewportView(statsTextArea3);
 
         statsTextArea1.setColumns(20);
         statsTextArea1.setFont(new java.awt.Font("Monospaced", 0, 10)); // NOI18N
         statsTextArea1.setRows(5);
-        statsTextArea1.setText("Czas\nZnaleziona trasa\nDługość trasy\nIlość operacji\n\"Odwiedzone\" węzły");
+        statsTextArea1.setText("Czas:\t\t\nIlość operacji:\nDługość trasy:\nZnaleziona trasa:");
         jScrollPane4.setViewportView(statsTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -284,6 +337,7 @@ public class MainGUI extends javax.swing.JFrame {
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
                         .addComponent(graphLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -376,16 +430,127 @@ public class MainGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        if (algorithmTypeComboBox.getSelectedIndex() == 0) {
+
+        long startTime = System.currentTimeMillis();
+        PathFinder.path = startSelectedAlgorithm(algorithmTypeComboBox, opt);
+        long stopTime = System.currentTimeMillis();
+        long elapsedTime = stopTime - startTime;
+        stats[0][0] = Long.toString(elapsedTime);
+        stats[0][2] = Double.toString(measurePath(PathFinder.path));
+        stats[0][3] = PathFinder.path.get(0).toString();
+        for (int i = 1; i < PathFinder.path.size(); i++) {
+            stats[0][3] += "-" + PathFinder.path.get(i).toString();
+        }
+
+        if (Integer.parseInt(threadComboBox1.getSelectedItem().toString()) > 1) {
+            startTime = System.currentTimeMillis();
+            PathFinder.path1 = startSelectedAlgorithm(algorithmTypeComboBox1, opt1);
+            stopTime = System.currentTimeMillis();
+            elapsedTime = stopTime - startTime;
+            stats[1][0] = Long.toString(elapsedTime);
+            stats[1][2] = Double.toString(measurePath(PathFinder.path1));
+            stats[1][3] = PathFinder.path1.get(0).toString();
+            for (int i = 1; i < PathFinder.path1.size(); i++) {
+                stats[1][3] += "-" + PathFinder.path1.get(i).toString();
+            }
+        }
+        if (Integer.parseInt(threadComboBox1.getSelectedItem().toString()) > 2) {
+            startTime = System.currentTimeMillis();
+            PathFinder.path2 = startSelectedAlgorithm(algorithmTypeComboBox2, opt2);
+            stopTime = System.currentTimeMillis();
+            elapsedTime = stopTime - startTime;
+            stats[2][0] = Long.toString(elapsedTime);
+            stats[2][2] = Double.toString(measurePath(PathFinder.path2));
+            stats[2][3] = PathFinder.path2.get(0).toString();
+            for (int i = 1; i < PathFinder.path2.size(); i++) {
+                stats[2][3] += "-" + PathFinder.path2.get(i).toString();
+            }
+        }
+        if (Integer.parseInt(threadComboBox1.getSelectedItem().toString()) > 3) {
+            startTime = System.currentTimeMillis();
+            PathFinder.path3 = startSelectedAlgorithm(algorithmTypeComboBox3, opt3);
+            stopTime = System.currentTimeMillis();
+            elapsedTime = stopTime - startTime;
+            stats[3][0] = Long.toString(elapsedTime);
+            stats[3][2] = Double.toString(measurePath(PathFinder.path3));
+            stats[3][3] = PathFinder.path1.get(0).toString();
+            for (int i = 1; i < PathFinder.path3.size(); i++) {
+                stats[3][3] += "-" + PathFinder.path3.get(i).toString();
+            }
+        }
+
+        PathFinder.graphUI.reset();
+
+        statsTextArea.setText("Czas:         " + stats[0][0] + "\n"
+                + "Ilość operacji:" + stats[0][1] + "\n"
+                + "Długość trasy: " + stats[0][2] + "\n"
+                + "Znaleziona trasa:" + stats[0][3]
+        );
+        if (threadComboBox1.getSelectedIndex() > 0) {
+            statsTextArea1.setText("Czas:         " + stats[1][0] + "\n"
+                    + "Ilość operacji:" + stats[1][1] + "\n"
+                    + "Długość trasy: " + stats[1][2] + "\n"
+                    + "Znaleziona trasa:" + stats[1][3] 
+            );
+        }
+        if (threadComboBox1.getSelectedIndex() > 1) {
+            statsTextArea2.setText("Czas:         " + stats[2][0] + "\n"
+                    + "Ilość operacji:" + stats[2][1] + "\n"
+                    + "Długość trasy: " + stats[2][2] + "\n"
+                    + "Znaleziona trasa:" + stats[2][3] 
+            );
+        }
+        if (threadComboBox1.getSelectedIndex() > 2) {
+            statsTextArea3.setText("Czas:         " + stats[3][0] + "\n"
+                    + "Ilość operacji:" + stats[3][1] + "\n"
+                    + "Długość trasy: " + stats[3][2] + "\n"
+                    + "Znaleziona trasa:" + stats[3][3]  
+            );
+        }
+    }//GEN-LAST:event_startButtonActionPerformed
+    private double measurePath(List<Integer> path){
+        double weight = 0.0;
+        
+        for(int i =0; i< path.size()-1; i++){
+            for (int k = 0; k < PathFinder.graph.edgesList.size(); k++) {
+
+                    if (PathFinder.graph.edgesList.get(k).getA() == path.get(i)
+                            && PathFinder.graph.edgesList.get(k).getB() == path.get(i+1)) {
+                        weight += PathFinder.graph.edgesList.get(k).getWeight();
+                    } else if (PathFinder.graph.edgesList.get(k).getB() == path.get(i)
+                            && PathFinder.graph.edgesList.get(k).getA() == path.get(i+1)) {
+                        weight += PathFinder.graph.edgesList.get(k).getWeight();
+                    }
+                }
+        }
+        return weight;
+    }
+    private List<Integer> startSelectedAlgorithm(JComboBox box, Options opt) {
+        List<Integer> path = new ArrayList<>();
+
+        if (box.getSelectedIndex() == 0) {
             Dijkstra dij = new Dijkstra();
-            PathFinder.path = dij.findWay(
+            path = dij.findWay(
                     Integer.parseInt(startTextField.getText()),
                     Integer.parseInt(endTextField.getText()),
                     PathFinder.graph);
         }
 
-        PathFinder.graphUI.reset();
-    }//GEN-LAST:event_startButtonActionPerformed
+        if (box.getSelectedIndex() == 3) {
+            AntSwarm swarm = new AntSwarm();
+            path = swarm.findWay(
+                    Integer.parseInt(startTextField.getText()),
+                    Integer.parseInt(endTextField.getText()),
+                    PathFinder.graph,
+                    opt.initialAntCount,
+                    opt.colonyCount,
+                    opt.pheromoneDetoriation,
+                    opt.distancePriority,
+                    opt.randomFactor);
+        }
+
+        return path;
+    }
 
     private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
 
@@ -441,6 +606,9 @@ public class MainGUI extends javax.swing.JFrame {
             optionButton2.setEnabled(false);
             algorithmTypeComboBox3.setEnabled(false);
             optionButton3.setEnabled(false);
+            PathFinder.path1 = null;
+            PathFinder.path2 = null;
+            PathFinder.path3 = null;
         }
         if (threadComboBox1.getSelectedIndex() == 1) {
             algorithmTypeComboBox1.setEnabled(true);
@@ -449,6 +617,8 @@ public class MainGUI extends javax.swing.JFrame {
             optionButton2.setEnabled(false);
             algorithmTypeComboBox3.setEnabled(false);
             optionButton3.setEnabled(false);
+            PathFinder.path2 = null;
+            PathFinder.path3 = null;
 
         }
         if (threadComboBox1.getSelectedIndex() == 2) {
@@ -458,6 +628,7 @@ public class MainGUI extends javax.swing.JFrame {
             optionButton2.setEnabled(true);
             algorithmTypeComboBox3.setEnabled(false);
             optionButton3.setEnabled(false);
+            PathFinder.path3 = null;
 
         }
         if (threadComboBox1.getSelectedIndex() == 3) {
@@ -470,6 +641,58 @@ public class MainGUI extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_threadComboBox1ActionPerformed
+
+    private void algorithmTypeComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_algorithmTypeComboBox2ActionPerformed
+
+    }//GEN-LAST:event_algorithmTypeComboBox2ActionPerformed
+
+    private void optionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionButtonActionPerformed
+        if (algorithmTypeComboBox.getSelectedItem().toString() == "Genetyczny") {
+            new OptionsUIGenetic().setVisible(true);
+        }
+        if (algorithmTypeComboBox.getSelectedItem().toString() == "Mrówkowy") {
+            new OptionsUIAnt().setVisible(true);
+        }
+    }//GEN-LAST:event_optionButtonActionPerformed
+
+    private void optionButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionButton1ActionPerformed
+        if (algorithmTypeComboBox1.getSelectedItem().toString() == "Genetyczny") {
+            new OptionsUIGenetic().setVisible(true);
+        }
+        if (algorithmTypeComboBox1.getSelectedItem().toString() == "Mrówkowy") {
+            new OptionsUIAnt().setVisible(true);
+        }
+    }//GEN-LAST:event_optionButton1ActionPerformed
+
+    private void optionButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionButton2ActionPerformed
+        if (algorithmTypeComboBox2.getSelectedItem().toString() == "Genetyczny") {
+            new OptionsUIGenetic().setVisible(true);
+        }
+        if (algorithmTypeComboBox2.getSelectedItem().toString() == "Mrówkowy") {
+            new OptionsUIAnt().setVisible(true);
+        }
+    }//GEN-LAST:event_optionButton2ActionPerformed
+
+    private void optionButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionButton3ActionPerformed
+        if (algorithmTypeComboBox3.getSelectedItem().toString() == "Genetyczny") {
+            new OptionsUIGenetic().setVisible(true);
+        }
+        if (algorithmTypeComboBox3.getSelectedItem().toString() == "Mrówkowy") {
+            new OptionsUIAnt().setVisible(true);
+        }
+    }//GEN-LAST:event_optionButton3ActionPerformed
+
+    private void algorithmTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_algorithmTypeComboBoxActionPerformed
+
+    }//GEN-LAST:event_algorithmTypeComboBoxActionPerformed
+
+    private void algorithmTypeComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_algorithmTypeComboBox1ActionPerformed
+
+    }//GEN-LAST:event_algorithmTypeComboBox1ActionPerformed
+
+    private void algorithmTypeComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_algorithmTypeComboBox3ActionPerformed
+
+    }//GEN-LAST:event_algorithmTypeComboBox3ActionPerformed
 
     /**
      * @param args the command line arguments

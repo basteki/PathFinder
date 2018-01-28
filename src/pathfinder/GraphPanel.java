@@ -98,11 +98,12 @@ public class GraphPanel extends javax.swing.JFrame {
 
     public void reset() {
         initComponents();
+        
         bM = 1.0;
         ovalSize = 6;
         boundaryX = 500;
         boundaryY = 500;
-        
+
     }
 
     public void paint(Graphics g) {
@@ -143,11 +144,9 @@ public class GraphPanel extends javax.swing.JFrame {
             }
             g.setColor(Color.BLUE);
             g.setFont(new Font("TimesRoman", Font.PLAIN, (int) (20 * (0.3 + bM))));
-            g.drawString(Integer.toString(i), (int) (PathFinder.graph.verticesList.get(i).x * bM + 50) - 3, (int) (PathFinder.graph.verticesList.get(i).y * bM+ 50 - 6));
+            g.drawString(Integer.toString(i), (int) (PathFinder.graph.verticesList.get(i).x * bM + 50) - 3, (int) (PathFinder.graph.verticesList.get(i).y * bM + 50 - 6));
 
-           
-                g.setColor(Color.BLACK);
-            
+            g.setColor(Color.BLACK);
 
             g.drawOval((int) (PathFinder.graph.verticesList.get(i).x * bM + 50) - 3, (int) (PathFinder.graph.verticesList.get(i).y * bM + 50) - 3, (int) (ovalSize), (int) (ovalSize));
 
@@ -155,23 +154,53 @@ public class GraphPanel extends javax.swing.JFrame {
         }
         i = 0;
         while (i < PathFinder.graph.edgesList.size()) {
- 
+
             g.drawLine((int) (PathFinder.graph.verticesList.get(PathFinder.graph.edgesList.get(i).getA()).x * bM + 50),
                     (int) (PathFinder.graph.verticesList.get(PathFinder.graph.edgesList.get(i).getA()).y * bM + 50),
                     (int) (PathFinder.graph.verticesList.get(PathFinder.graph.edgesList.get(i).getB()).x * bM + 50),
                     (int) (PathFinder.graph.verticesList.get(PathFinder.graph.edgesList.get(i).getB()).y * bM + 50));
             i++;
         }
-        for (int j = 0; j < PathFinder.path.size() - 1; j++) {
-            System.out.println(PathFinder.path.get(j));
-            g.setColor(Color.RED);
-                        g.drawLine((int) (PathFinder.graph.verticesList.get(PathFinder.path.get(j)).x * bM + 50),
-                                    (int) (PathFinder.graph.verticesList.get(PathFinder.path.get(j)).y * bM + 50 ),
-                                    (int) (PathFinder.graph.verticesList.get(PathFinder.path.get(j+1)).x * bM + 50),
-                                    (int) (PathFinder.graph.verticesList.get(PathFinder.path.get(j+1)).y * bM + 50));
+        if (PathFinder.path != null) {
+            for (int j = 0; j < PathFinder.path.size() - 1; j++) {
+               // System.out.println(PathFinder.path.get(j));
+                g.setColor(Color.RED);
+                g.drawLine((int) (PathFinder.graph.verticesList.get(PathFinder.path.get(j)).x * bM + 50),
+                        (int) (PathFinder.graph.verticesList.get(PathFinder.path.get(j)).y * bM + 50),
+                        (int) (PathFinder.graph.verticesList.get(PathFinder.path.get(j + 1)).x * bM + 50),
+                        (int) (PathFinder.graph.verticesList.get(PathFinder.path.get(j + 1)).y * bM + 50));
+            }
         }
-        
-        
+        if (PathFinder.path1 != null) {
+            for (int j = 0; j < PathFinder.path1.size() - 1; j++) {
+                //System.out.println(PathFinder.path1.get(j));
+                g.setColor(Color.GREEN);
+                g.drawLine((int) (PathFinder.graph.verticesList.get(PathFinder.path1.get(j)).x * bM + 50),
+                        (int) (PathFinder.graph.verticesList.get(PathFinder.path1.get(j)).y * bM + 50),
+                        (int) (PathFinder.graph.verticesList.get(PathFinder.path1.get(j + 1)).x * bM + 50),
+                        (int) (PathFinder.graph.verticesList.get(PathFinder.path1.get(j + 1)).y * bM + 50));
+            }
+        }
+        if (PathFinder.path2 != null) {
+            for (int j = 0; j < PathFinder.path2.size() - 1; j++) {
+                //System.out.println(PathFinder.path2.get(j));
+                g.setColor(Color.ORANGE);
+                g.drawLine((int) (PathFinder.graph.verticesList.get(PathFinder.path2.get(j)).x * bM + 50),
+                        (int) (PathFinder.graph.verticesList.get(PathFinder.path2.get(j)).y * bM + 50),
+                        (int) (PathFinder.graph.verticesList.get(PathFinder.path2.get(j + 1)).x * bM + 50),
+                        (int) (PathFinder.graph.verticesList.get(PathFinder.path2.get(j + 1)).y * bM + 50));
+            }
+        }
+        if (PathFinder.path3 != null) {
+            for (int j = 0; j < PathFinder.path3.size() - 1; j++) {
+                //System.out.println(PathFinder.path3.get(j));
+                g.setColor(Color.cyan);
+                g.drawLine((int) (PathFinder.graph.verticesList.get(PathFinder.path3.get(j)).x * bM + 50),
+                        (int) (PathFinder.graph.verticesList.get(PathFinder.path3.get(j)).y * bM + 50),
+                        (int) (PathFinder.graph.verticesList.get(PathFinder.path3.get(j + 1)).x * bM + 50),
+                        (int) (PathFinder.graph.verticesList.get(PathFinder.path3.get(j + 1)).y * bM + 50));
+            }
+        }
     }
 
 
