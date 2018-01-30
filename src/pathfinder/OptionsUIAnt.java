@@ -31,15 +31,15 @@ public class OptionsUIAnt extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        heuristicCheckBox = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        initCountField = new javax.swing.JTextField();
+        colonyCountField = new javax.swing.JTextField();
+        saveButton = new javax.swing.JButton();
+        randomFactorField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        detoriationField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -47,46 +47,46 @@ public class OptionsUIAnt extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Opcje -Algorytm Kolonii Mrówek");
 
-        jCheckBox2.setText("Heurystyka");
+        heuristicCheckBox.setText("Heurystyka");
 
         jLabel4.setText("Ilość podstawowa");
 
         jLabel5.setText("Wielkość kolonii");
 
-        jTextField1.setText("200");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        initCountField.setText("200");
+        initCountField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                initCountFieldActionPerformed(evt);
             }
         });
 
-        jTextField2.setText("100");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        colonyCountField.setText("100");
+        colonyCountField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                colonyCountFieldActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Zapisz");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        saveButton.setText("Zapisz");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                saveButtonActionPerformed(evt);
             }
         });
 
-        jTextField3.setText("0.4");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        randomFactorField.setText("0.4");
+        randomFactorField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                randomFactorFieldActionPerformed(evt);
             }
         });
 
         jLabel6.setText("Współ. losowy");
 
-        jTextField4.setText("0.7");
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        detoriationField.setText("0.7");
+        detoriationField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                detoriationFieldActionPerformed(evt);
             }
         });
 
@@ -107,24 +107,24 @@ public class OptionsUIAnt extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(randomFactorField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel4)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField1))
+                                    .addComponent(initCountField))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel5)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jCheckBox2))
+                                    .addComponent(colonyCountField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(heuristicCheckBox))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(detoriationField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(201, 201, 201)
-                        .addComponent(jButton1)))
+                        .addComponent(saveButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -133,50 +133,74 @@ public class OptionsUIAnt extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jCheckBox2)
+                .addComponent(heuristicCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(initCountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(colonyCountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(randomFactorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(detoriationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(saveButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void initCountFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initCountFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_initCountFieldActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void colonyCountFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colonyCountFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_colonyCountFieldActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void randomFactorFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomFactorFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_randomFactorFieldActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void detoriationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detoriationFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_detoriationFieldActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        if (MainGUI.optRouter == 0) {
+            MainGUI.opt.colonyCount = Integer.parseInt(colonyCountField.getText());
+            MainGUI.opt.initialAntCount = Integer.parseInt(initCountField.getText());
+            MainGUI.opt.pheromoneDetoriation = Double.parseDouble(detoriationField.getText());
+            MainGUI.opt.randomFactor = Double.parseDouble(randomFactorField.getText());
+        }
+        if (MainGUI.optRouter == 1) {
+            MainGUI.opt1.colonyCount = Integer.parseInt(colonyCountField.getText());
+            MainGUI.opt1.initialAntCount = Integer.parseInt(initCountField.getText());
+            MainGUI.opt1.pheromoneDetoriation = Double.parseDouble(detoriationField.getText());
+            MainGUI.opt1.randomFactor = Double.parseDouble(randomFactorField.getText());
+        }
+        if (MainGUI.optRouter == 2) {
+            MainGUI.opt2.colonyCount = Integer.parseInt(colonyCountField.getText());
+            MainGUI.opt2.initialAntCount = Integer.parseInt(initCountField.getText());
+            MainGUI.opt2.pheromoneDetoriation = Double.parseDouble(detoriationField.getText());
+            MainGUI.opt2.randomFactor = Double.parseDouble(randomFactorField.getText());
+        }
+        if (MainGUI.optRouter == 3) {
+            MainGUI.opt3.colonyCount = Integer.parseInt(colonyCountField.getText());
+            MainGUI.opt3.initialAntCount = Integer.parseInt(initCountField.getText());
+            MainGUI.opt3.pheromoneDetoriation = Double.parseDouble(detoriationField.getText());
+            MainGUI.opt3.randomFactor = Double.parseDouble(randomFactorField.getText());
+        }
+      
+    }//GEN-LAST:event_saveButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,16 +244,16 @@ public class OptionsUIAnt extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JTextField colonyCountField;
+    private javax.swing.JTextField detoriationField;
+    private javax.swing.JCheckBox heuristicCheckBox;
+    private javax.swing.JTextField initCountField;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField randomFactorField;
+    private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }

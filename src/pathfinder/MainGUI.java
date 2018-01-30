@@ -6,7 +6,10 @@
 package pathfinder;
 
 import algorithms.AntSwarm;
+import algorithms.Astar;
+import algorithms.BellmanFord;
 import algorithms.Dijkstra;
+import algorithms.Genetic;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -31,10 +34,11 @@ public class MainGUI extends javax.swing.JFrame {
     //TIME ; OPERATIONS ; LENGTH; PATH
     public static String[][] stats = new String[4][4];
 
-    Options opt = new Options();
-    Options opt1 = new Options();
-    Options opt2 = new Options();
-    Options opt3 = new Options();
+    static Options opt = new Options();
+    static Options opt1 = new Options();
+    static Options opt2 = new Options();
+    static Options opt3 = new Options();
+    static int optRouter = 0;
 
     public MainGUI() {
         initComponents();
@@ -490,47 +494,64 @@ public class MainGUI extends javax.swing.JFrame {
             statsTextArea1.setText("Czas:         " + stats[1][0] + "\n"
                     + "Ilość operacji:" + stats[1][1] + "\n"
                     + "Długość trasy: " + stats[1][2] + "\n"
-                    + "Znaleziona trasa:" + stats[1][3] 
+                    + "Znaleziona trasa:" + stats[1][3]
             );
         }
         if (threadComboBox1.getSelectedIndex() > 1) {
             statsTextArea2.setText("Czas:         " + stats[2][0] + "\n"
                     + "Ilość operacji:" + stats[2][1] + "\n"
                     + "Długość trasy: " + stats[2][2] + "\n"
-                    + "Znaleziona trasa:" + stats[2][3] 
+                    + "Znaleziona trasa:" + stats[2][3]
             );
         }
         if (threadComboBox1.getSelectedIndex() > 2) {
             statsTextArea3.setText("Czas:         " + stats[3][0] + "\n"
                     + "Ilość operacji:" + stats[3][1] + "\n"
                     + "Długość trasy: " + stats[3][2] + "\n"
-                    + "Znaleziona trasa:" + stats[3][3]  
+                    + "Znaleziona trasa:" + stats[3][3]
             );
         }
     }//GEN-LAST:event_startButtonActionPerformed
-    private double measurePath(List<Integer> path){
+    public static double measurePath(List<Integer> path) {
         double weight = 0.0;
-        
-        for(int i =0; i< path.size()-1; i++){
+
+        for (int i = 0; i < path.size() - 1; i++) {
             for (int k = 0; k < PathFinder.graph.edgesList.size(); k++) {
 
-                    if (PathFinder.graph.edgesList.get(k).getA() == path.get(i)
-                            && PathFinder.graph.edgesList.get(k).getB() == path.get(i+1)) {
-                        weight += PathFinder.graph.edgesList.get(k).getWeight();
-                    } else if (PathFinder.graph.edgesList.get(k).getB() == path.get(i)
-                            && PathFinder.graph.edgesList.get(k).getA() == path.get(i+1)) {
-                        weight += PathFinder.graph.edgesList.get(k).getWeight();
-                    }
+                if (PathFinder.graph.edgesList.get(k).getA() == path.get(i)
+                        && PathFinder.graph.edgesList.get(k).getB() == path.get(i + 1)) {
+                    weight += PathFinder.graph.edgesList.get(k).getWeight();
+                } else if (PathFinder.graph.edgesList.get(k).getB() == path.get(i)
+                        && PathFinder.graph.edgesList.get(k).getA() == path.get(i + 1)) {
+                    weight += PathFinder.graph.edgesList.get(k).getWeight();
                 }
+            }
         }
         return weight;
     }
+
     private List<Integer> startSelectedAlgorithm(JComboBox box, Options opt) {
         List<Integer> path = new ArrayList<>();
 
         if (box.getSelectedIndex() == 0) {
             Dijkstra dij = new Dijkstra();
             path = dij.findWay(
+                    Integer.parseInt(startTextField.getText()),
+                    Integer.parseInt(endTextField.getText()),
+                    PathFinder.graph);
+        }
+
+        if (box.getSelectedIndex() == 1) {
+            Astar a = new Astar();
+            path = a.findWay(
+                    Integer.parseInt(startTextField.getText()),
+                    Integer.parseInt(endTextField.getText()),
+                    PathFinder.graph);
+        }
+
+        if (box.getSelectedIndex() == 2) {
+            BellmanFord belF = new BellmanFord();
+            path = belF.findWay(
                     Integer.parseInt(startTextField.getText()),
                     Integer.parseInt(endTextField.getText()),
                     PathFinder.graph);
@@ -547,6 +568,23 @@ public class MainGUI extends javax.swing.JFrame {
                     opt.pheromoneDetoriation,
                     opt.distancePriority,
                     opt.randomFactor);
+        }
+
+        if (box.getSelectedIndex() == 4) {
+            Genetic gen = new Genetic();
+            path = gen.findWay(
+                    Integer.parseInt(startTextField.getText()),
+                    Integer.parseInt(endTextField.getText()),
+                    PathFinder.graph,
+                    opt.population,
+                    opt.generations,
+                    opt.heuristic,
+                    opt.crossing,
+                    opt.mutation,
+                    opt.selection,
+                    opt.crossP,
+                    opt.mutationP
+            );
         }
 
         return path;
@@ -647,6 +685,8 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_algorithmTypeComboBox2ActionPerformed
 
     private void optionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionButtonActionPerformed
+
+        optRouter = 0;
         if (algorithmTypeComboBox.getSelectedItem().toString() == "Genetyczny") {
             new OptionsUIGenetic().setVisible(true);
         }
@@ -656,6 +696,7 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_optionButtonActionPerformed
 
     private void optionButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionButton1ActionPerformed
+        optRouter = 1;
         if (algorithmTypeComboBox1.getSelectedItem().toString() == "Genetyczny") {
             new OptionsUIGenetic().setVisible(true);
         }
@@ -665,6 +706,7 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_optionButton1ActionPerformed
 
     private void optionButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionButton2ActionPerformed
+        optRouter = 2;
         if (algorithmTypeComboBox2.getSelectedItem().toString() == "Genetyczny") {
             new OptionsUIGenetic().setVisible(true);
         }
@@ -674,6 +716,7 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_optionButton2ActionPerformed
 
     private void optionButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionButton3ActionPerformed
+        optRouter = 3;
         if (algorithmTypeComboBox3.getSelectedItem().toString() == "Genetyczny") {
             new OptionsUIGenetic().setVisible(true);
         }

@@ -31,44 +31,48 @@ public class OptionsUIGenetic extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        heurBox = new javax.swing.JCheckBox();
+        pmxButton = new javax.swing.JRadioButton();
+        oxButton = new javax.swing.JRadioButton();
+        splitButton = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
+        regularButton = new javax.swing.JRadioButton();
+        moveButton = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        populationField = new javax.swing.JTextField();
+        generationField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        tourneeButton = new javax.swing.JRadioButton();
+        rouletteButton = new javax.swing.JRadioButton();
+        saveButton = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        mutationProbField = new javax.swing.JTextField();
+        crossPobField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Opcje -Algorytm Ewolucyjny");
 
-        jCheckBox2.setText("Heurystyka");
+        heurBox.setText("Heurystyka");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("PMX");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(pmxButton);
+        pmxButton.setSelected(true);
+        pmxButton.setText("PMX");
+        pmxButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                pmxButtonActionPerformed(evt);
             }
         });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("OX");
+        buttonGroup1.add(oxButton);
+        oxButton.setText("OX");
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("CX");
+        buttonGroup1.add(splitButton);
+        splitButton.setText("Split");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Krzyżowanie");
@@ -76,47 +80,75 @@ public class OptionsUIGenetic extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Mutacja");
 
-        buttonGroup2.add(jRadioButton4);
-        jRadioButton4.setSelected(true);
-        jRadioButton4.setText("Równomierna");
-        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup2.add(regularButton);
+        regularButton.setSelected(true);
+        regularButton.setText("Równomierna");
+        regularButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton4ActionPerformed(evt);
+                regularButtonActionPerformed(evt);
             }
         });
 
-        buttonGroup2.add(jRadioButton5);
-        jRadioButton5.setText("Przesunięcie");
+        buttonGroup2.add(moveButton);
+        moveButton.setText("Przesunięcie");
 
         jLabel4.setText("Populacja");
 
         jLabel5.setText("Liczba Generacji");
 
-        jTextField1.setText("100");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        populationField.setText("100");
+        populationField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                populationFieldActionPerformed(evt);
             }
         });
 
-        jTextField2.setText("100");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        generationField.setText("100");
+        generationField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                generationFieldActionPerformed(evt);
             }
         });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("Wybór rodziców");
 
-        buttonGroup3.add(jRadioButton6);
-        jRadioButton6.setSelected(true);
-        jRadioButton6.setText("Turniej");
+        buttonGroup3.add(tourneeButton);
+        tourneeButton.setText("Turniej");
 
-        buttonGroup3.add(jRadioButton7);
-        jRadioButton7.setText("Ruletka");
+        buttonGroup3.add(rouletteButton);
+        rouletteButton.setSelected(true);
+        rouletteButton.setText("Ruletka");
+        rouletteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rouletteButtonActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("Zapisz");
+        saveButton.setText("Zapisz");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Prawdop.");
+
+        jLabel8.setText("Prawdop.");
+
+        mutationProbField.setText("0.01");
+        mutationProbField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mutationProbFieldActionPerformed(evt);
+            }
+        });
+
+        crossPobField.setText("0.8");
+        crossPobField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crossPobFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,32 +159,44 @@ public class OptionsUIGenetic extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jCheckBox2)
+                    .addComponent(heurBox)
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jRadioButton5)
-                            .addComponent(jRadioButton4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(moveButton)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(41, 41, 41)
+                                    .addComponent(populationField))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(generationField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(rouletteButton))
+                            .addComponent(tourneeButton)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(41, 41, 41)
-                                .addComponent(jTextField1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel6)
-                            .addComponent(jRadioButton6)
-                            .addComponent(jRadioButton7)))
-                    .addComponent(jRadioButton3)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(regularButton))
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(mutationProbField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jLabel8)
+                                            .addComponent(crossPobField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jRadioButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRadioButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(oxButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pmxButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(splitButton))
                 .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(saveButton)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -161,64 +205,190 @@ public class OptionsUIGenetic extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jCheckBox2)
+                .addComponent(heurBox)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pmxButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(oxButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(splitButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(regularButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(crossPobField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mutationProbField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton5)
+                .addComponent(moveButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton6)
+                .addComponent(tourneeButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton7)
+                .addComponent(rouletteButton)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(populationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(generationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(saveButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void pmxButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmxButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_pmxButtonActionPerformed
 
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+    private void regularButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regularButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton4ActionPerformed
+    }//GEN-LAST:event_regularButtonActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void populationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populationFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_populationFieldActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void generationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generationFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_generationFieldActionPerformed
+
+    private void mutationProbFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mutationProbFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mutationProbFieldActionPerformed
+
+    private void crossPobFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crossPobFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_crossPobFieldActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        if (MainGUI.optRouter == 4) {
+
+             MainGUI.opt.heuristic = heurBox.isSelected();
+             if(pmxButton.isSelected())
+                MainGUI.opt.crossing = 0;
+             if(oxButton.isSelected())
+                 MainGUI.opt.crossing = 1;
+             if(splitButton.isSelected())
+                 MainGUI.opt.crossing = 2;
+             
+             if(regularButton.isSelected())
+                 MainGUI.opt.mutation = 0;
+             if(moveButton.isSelected())
+                 MainGUI.opt.mutation = 1;
+             
+             if(tourneeButton.isSelected())
+                 MainGUI.opt.selection = 0;
+             if(rouletteButton.isSelected())
+                 MainGUI.opt.selection = 1;
+                         
+             MainGUI.opt.population = Integer.parseInt(populationField.getText()); 
+             MainGUI.opt.generations = Integer.parseInt(generationField.getText()); 
+             MainGUI.opt.crossP = Double.parseDouble(crossPobField.getText()); 
+             MainGUI.opt.mutationP = Double.parseDouble(mutationProbField.getText()); 
+             
+
+        }
+        if (MainGUI.optRouter == 4) {
+                         MainGUI.opt.heuristic = heurBox.isSelected();
+             if(pmxButton.isSelected())
+                MainGUI.opt1.crossing = 0;
+             if(oxButton.isSelected())
+                 MainGUI.opt1.crossing = 1;
+             if(splitButton.isSelected())
+                 MainGUI.opt1.crossing = 2;
+             
+             if(regularButton.isSelected())
+                 MainGUI.opt1.mutation = 0;
+             if(moveButton.isSelected())
+                 MainGUI.opt1.mutation = 1;
+             
+             if(tourneeButton.isSelected())
+                 MainGUI.opt1.selection = 0;
+             if(rouletteButton.isSelected())
+                 MainGUI.opt1.selection = 1;
+                         
+             MainGUI.opt1.population = Integer.parseInt(populationField.getText()); 
+             MainGUI.opt1.generations = Integer.parseInt(generationField.getText()); 
+             MainGUI.opt1.crossP = Integer.parseInt(crossPobField.getText()); 
+             MainGUI.opt1.mutationP = Integer.parseInt(mutationProbField.getText()); 
+        }
+        if (MainGUI.optRouter == 4) {
+                         MainGUI.opt2.heuristic = heurBox.isSelected();
+             if(pmxButton.isSelected())
+                MainGUI.opt2.crossing = 0;
+             if(oxButton.isSelected())
+                 MainGUI.opt2.crossing = 1;
+             if(splitButton.isSelected())
+                 MainGUI.opt2.crossing = 2;
+             
+             if(regularButton.isSelected())
+                 MainGUI.opt2.mutation = 0;
+             if(moveButton.isSelected())
+                 MainGUI.opt2.mutation = 1;
+             
+             if(tourneeButton.isSelected())
+                 MainGUI.opt2.selection = 0;
+             if(rouletteButton.isSelected())
+                 MainGUI.opt2.selection = 1;
+                         
+             MainGUI.opt2.population = Integer.parseInt(populationField.getText()); 
+             MainGUI.opt2.generations = Integer.parseInt(generationField.getText()); 
+             MainGUI.opt2.crossP = Integer.parseInt(crossPobField.getText()); 
+             MainGUI.opt2.mutationP = Integer.parseInt(mutationProbField.getText()); 
+        }
+        if (MainGUI.optRouter == 4) {
+                         MainGUI.opt3.heuristic = heurBox.isSelected();
+             if(pmxButton.isSelected())
+                MainGUI.opt3.crossing = 0;
+             if(oxButton.isSelected())
+                 MainGUI.opt3.crossing = 1;
+             if(splitButton.isSelected())
+                 MainGUI.opt3.crossing = 2;
+             
+             if(regularButton.isSelected())
+                 MainGUI.opt3.mutation = 0;
+             if(moveButton.isSelected())
+                 MainGUI.opt3.mutation = 1;
+             
+             if(tourneeButton.isSelected())
+                 MainGUI.opt3.selection = 0;
+             if(rouletteButton.isSelected())
+                 MainGUI.opt3.selection = 1;
+                         
+             MainGUI.opt3.population = Integer.parseInt(populationField.getText()); 
+             MainGUI.opt3.generations = Integer.parseInt(generationField.getText()); 
+             MainGUI.opt3.crossP = Integer.parseInt(crossPobField.getText()); 
+             MainGUI.opt3.mutationP = Integer.parseInt(mutationProbField.getText()); 
+        }
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void rouletteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rouletteButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rouletteButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -254,22 +424,26 @@ public class OptionsUIGenetic extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JTextField crossPobField;
+    private javax.swing.JTextField generationField;
+    private javax.swing.JCheckBox heurBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JRadioButton moveButton;
+    private javax.swing.JTextField mutationProbField;
+    private javax.swing.JRadioButton oxButton;
+    private javax.swing.JRadioButton pmxButton;
+    private javax.swing.JTextField populationField;
+    private javax.swing.JRadioButton regularButton;
+    private javax.swing.JRadioButton rouletteButton;
+    private javax.swing.JButton saveButton;
+    private javax.swing.JRadioButton splitButton;
+    private javax.swing.JRadioButton tourneeButton;
     // End of variables declaration//GEN-END:variables
 }

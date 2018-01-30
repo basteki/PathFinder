@@ -19,4 +19,15 @@ public class Options {
    public double distancePriority = 0.8; 
    
    ///Genetic
+   
+   public boolean heuristic = false;
+   public int crossing = 0;
+   public int mutation = 0;
+   public int selection = 1;
+   public int population = 100;
+   public int generations = 100;
+   public double crossP = 0.8;
+   public double mutationP = 0.01;
+           
+   
 }
