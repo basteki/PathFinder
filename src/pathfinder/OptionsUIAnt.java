@@ -31,7 +31,6 @@ public class OptionsUIAnt extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
-        heuristicCheckBox = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         initCountField = new javax.swing.JTextField();
@@ -41,13 +40,18 @@ public class OptionsUIAnt extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         detoriationField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        distancePriorityField = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Opcje -Algorytm Kolonii Mrówek");
-
-        heuristicCheckBox.setText("Heurystyka");
 
         jLabel4.setText("Ilość podstawowa");
 
@@ -60,7 +64,7 @@ public class OptionsUIAnt extends javax.swing.JFrame {
             }
         });
 
-        colonyCountField.setText("100");
+        colonyCountField.setText("1000");
         colonyCountField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 colonyCountFieldActionPerformed(evt);
@@ -92,6 +96,15 @@ public class OptionsUIAnt extends javax.swing.JFrame {
 
         jLabel7.setText("Ulatnianie");
 
+        distancePriorityField.setText("0.7");
+        distancePriorityField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                distancePriorityFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Priorytet heur.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,8 +115,15 @@ public class OptionsUIAnt extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGap(201, 201, 201)
+                        .addComponent(saveButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(distancePriorityField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
@@ -116,15 +136,11 @@ public class OptionsUIAnt extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel5)
                                     .addGap(18, 18, 18)
-                                    .addComponent(colonyCountField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(heuristicCheckBox))
+                                    .addComponent(colonyCountField, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
-                                .addComponent(detoriationField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(201, 201, 201)
-                        .addComponent(saveButton)))
+                                .addComponent(detoriationField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -133,8 +149,6 @@ public class OptionsUIAnt extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(heuristicCheckBox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(initCountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -150,7 +164,11 @@ public class OptionsUIAnt extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(detoriationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(distancePriorityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
                 .addComponent(saveButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -175,32 +193,83 @@ public class OptionsUIAnt extends javax.swing.JFrame {
     }//GEN-LAST:event_detoriationFieldActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        
         if (MainGUI.optRouter == 0) {
-            MainGUI.opt.colonyCount = Integer.parseInt(colonyCountField.getText());
-            MainGUI.opt.initialAntCount = Integer.parseInt(initCountField.getText());
-            MainGUI.opt.pheromoneDetoriation = Double.parseDouble(detoriationField.getText());
-            MainGUI.opt.randomFactor = Double.parseDouble(randomFactorField.getText());
+            MainGUI.opt0.colonyCount = Integer.parseInt(this.colonyCountField.getText());
+            MainGUI.opt0.initialAntCount = Integer.parseInt(this.initCountField.getText());
+            MainGUI.opt0.pheromoneDetoriation = Double.parseDouble(this.detoriationField.getText());
+            MainGUI.opt0.randomFactor = Double.parseDouble(this.randomFactorField.getText());
+
         }
         if (MainGUI.optRouter == 1) {
-            MainGUI.opt1.colonyCount = Integer.parseInt(colonyCountField.getText());
-            MainGUI.opt1.initialAntCount = Integer.parseInt(initCountField.getText());
-            MainGUI.opt1.pheromoneDetoriation = Double.parseDouble(detoriationField.getText());
-            MainGUI.opt1.randomFactor = Double.parseDouble(randomFactorField.getText());
+            MainGUI.opt1.colonyCount= Integer.parseInt(this.colonyCountField.getText());
+            MainGUI.opt1.initialAntCount = Integer.parseInt(this.initCountField.getText());
+            MainGUI.opt1.pheromoneDetoriation = Double.parseDouble(this.detoriationField.getText());
+            MainGUI.opt1.randomFactor = Double.parseDouble(this.randomFactorField.getText());
+            
         }
         if (MainGUI.optRouter == 2) {
-            MainGUI.opt2.colonyCount = Integer.parseInt(colonyCountField.getText());
-            MainGUI.opt2.initialAntCount = Integer.parseInt(initCountField.getText());
-            MainGUI.opt2.pheromoneDetoriation = Double.parseDouble(detoriationField.getText());
-            MainGUI.opt2.randomFactor = Double.parseDouble(randomFactorField.getText());
+            MainGUI.opt2.colonyCount = Integer.parseInt(this.colonyCountField.getText());
+            MainGUI.opt2.initialAntCount = Integer.parseInt(this.initCountField.getText());
+            MainGUI.opt2.pheromoneDetoriation = Double.parseDouble(this.detoriationField.getText());
+            MainGUI.opt2.randomFactor = Double.parseDouble(this.randomFactorField.getText());
+            
         }
         if (MainGUI.optRouter == 3) {
-            MainGUI.opt3.colonyCount = Integer.parseInt(colonyCountField.getText());
-            MainGUI.opt3.initialAntCount = Integer.parseInt(initCountField.getText());
-            MainGUI.opt3.pheromoneDetoriation = Double.parseDouble(detoriationField.getText());
-            MainGUI.opt3.randomFactor = Double.parseDouble(randomFactorField.getText());
+            MainGUI.opt3.colonyCount = Integer.parseInt(this.colonyCountField.getText());
+            MainGUI.opt3.initialAntCount = Integer.parseInt(this.initCountField.getText());
+            MainGUI.opt3.pheromoneDetoriation = Double.parseDouble(this.detoriationField.getText());
+            MainGUI.opt3.randomFactor = Double.parseDouble(this.randomFactorField.getText());
+            
         }
-      
+        
+        this.setVisible(false);
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void distancePriorityFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_distancePriorityFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_distancePriorityFieldActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        setTexts();
+    }//GEN-LAST:event_formWindowActivated
+    public void setTexts() {
+
+        String cc = Integer.toString(MainGUI.opt0.colonyCount);
+        String ic = Integer.toString(MainGUI.opt0.initialAntCount);
+        String pd = Double.toString(MainGUI.opt0.pheromoneDetoriation);
+        String rf = Double.toString(MainGUI.opt0.randomFactor);
+        String dp = Double.toString(MainGUI.opt0.distancePriority);
+        
+        if (MainGUI.optRouter == 1) {
+            cc = Integer.toString(MainGUI.opt1.colonyCount);
+            ic = Integer.toString(MainGUI.opt1.initialAntCount);
+            pd = Double.toString(MainGUI.opt1.pheromoneDetoriation);
+            rf = Double.toString(MainGUI.opt1.randomFactor);
+            dp = Double.toString(MainGUI.opt1.distancePriority);
+        }
+        if (MainGUI.optRouter == 2) {
+            cc = Integer.toString(MainGUI.opt2.colonyCount);
+            ic = Integer.toString(MainGUI.opt2.initialAntCount);
+            pd = Double.toString(MainGUI.opt2.pheromoneDetoriation);
+            rf = Double.toString(MainGUI.opt2.randomFactor);
+            dp = Double.toString(MainGUI.opt2.distancePriority);
+            
+        }
+        if (MainGUI.optRouter == 3) {
+            cc = Integer.toString(MainGUI.opt3.colonyCount);
+            ic = Integer.toString(MainGUI.opt3.initialAntCount);
+            pd = Double.toString(MainGUI.opt3.pheromoneDetoriation);
+            rf = Double.toString(MainGUI.opt3.randomFactor);
+            dp = Double.toString(MainGUI.opt3.distancePriority);
+            
+        }
+        this.colonyCountField.setText(cc);
+        this.initCountField.setText(ic);
+        this.detoriationField.setText(pd);
+        this.randomFactorField.setText(rf);
+        this.distancePriorityField.setText(dp);
+    }
 
     /**
      * @param args the command line arguments
@@ -236,6 +305,7 @@ public class OptionsUIAnt extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new OptionsUIAnt().setVisible(true);
+
             }
         });
     }
@@ -246,13 +316,14 @@ public class OptionsUIAnt extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JTextField colonyCountField;
     private javax.swing.JTextField detoriationField;
-    private javax.swing.JCheckBox heuristicCheckBox;
+    private javax.swing.JTextField distancePriorityField;
     private javax.swing.JTextField initCountField;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField randomFactorField;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables

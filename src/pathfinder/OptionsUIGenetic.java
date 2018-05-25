@@ -27,18 +27,15 @@ public class OptionsUIGenetic extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup2 = new javax.swing.ButtonGroup();
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup3 = new javax.swing.ButtonGroup();
+        crossingButtons = new javax.swing.ButtonGroup();
+        eliminationButtons = new javax.swing.ButtonGroup();
+        chromTypeButtons = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
         heurBox = new javax.swing.JCheckBox();
-        pmxButton = new javax.swing.JRadioButton();
         oxButton = new javax.swing.JRadioButton();
         splitButton = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        regularButton = new javax.swing.JRadioButton();
-        moveButton = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         populationField = new javax.swing.JTextField();
@@ -48,30 +45,37 @@ public class OptionsUIGenetic extends javax.swing.JFrame {
         rouletteButton = new javax.swing.JRadioButton();
         saveButton = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        mutationProbField = new javax.swing.JTextField();
-        crossPobField = new javax.swing.JTextField();
+        crossingProb = new javax.swing.JSlider();
+        mutationProb = new javax.swing.JSlider();
+        eliminationProb = new javax.swing.JSlider();
+        elimLabel = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        verticeButton = new javax.swing.JRadioButton();
+        edgeButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Opcje -Algorytm Ewolucyjny");
 
         heurBox.setText("Heurystyka");
 
-        buttonGroup1.add(pmxButton);
-        pmxButton.setSelected(true);
-        pmxButton.setText("PMX");
-        pmxButton.addActionListener(new java.awt.event.ActionListener() {
+        crossingButtons.add(oxButton);
+        oxButton.setSelected(true);
+        oxButton.setText("OX");
+        oxButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pmxButtonActionPerformed(evt);
+                oxButtonActionPerformed(evt);
             }
         });
 
-        buttonGroup1.add(oxButton);
-        oxButton.setText("OX");
-
-        buttonGroup1.add(splitButton);
+        crossingButtons.add(splitButton);
         splitButton.setText("Split");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -79,18 +83,6 @@ public class OptionsUIGenetic extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Mutacja");
-
-        buttonGroup2.add(regularButton);
-        regularButton.setSelected(true);
-        regularButton.setText("Równomierna");
-        regularButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                regularButtonActionPerformed(evt);
-            }
-        });
-
-        buttonGroup2.add(moveButton);
-        moveButton.setText("Przesunięcie");
 
         jLabel4.setText("Populacja");
 
@@ -113,11 +105,16 @@ public class OptionsUIGenetic extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("Wybór rodziców");
 
-        buttonGroup3.add(tourneeButton);
+        eliminationButtons.add(tourneeButton);
+        tourneeButton.setSelected(true);
         tourneeButton.setText("Turniej");
+        tourneeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tourneeButtonActionPerformed(evt);
+            }
+        });
 
-        buttonGroup3.add(rouletteButton);
-        rouletteButton.setSelected(true);
+        eliminationButtons.add(rouletteButton);
         rouletteButton.setText("Ruletka");
         rouletteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,23 +129,52 @@ public class OptionsUIGenetic extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("Prawdop.");
+        jLabel7.setText("Prawdopodobieństwo (%)");
 
-        jLabel8.setText("Prawdop.");
-
-        mutationProbField.setText("0.01");
-        mutationProbField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mutationProbFieldActionPerformed(evt);
+        crossingProb.setMajorTickSpacing(25);
+        crossingProb.setMinorTickSpacing(10);
+        crossingProb.setPaintLabels(true);
+        crossingProb.setPaintTicks(true);
+        crossingProb.setValue(80);
+        crossingProb.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                crossingProbStateChanged(evt);
             }
         });
 
-        crossPobField.setText("0.8");
-        crossPobField.addActionListener(new java.awt.event.ActionListener() {
+        mutationProb.setMajorTickSpacing(10);
+        mutationProb.setMaximum(50);
+        mutationProb.setMinorTickSpacing(5);
+        mutationProb.setPaintLabels(true);
+        mutationProb.setPaintTicks(true);
+        mutationProb.setSnapToTicks(true);
+        mutationProb.setValue(5);
+
+        eliminationProb.setMajorTickSpacing(30);
+        eliminationProb.setMaximum(90);
+        eliminationProb.setMinorTickSpacing(10);
+        eliminationProb.setPaintLabels(true);
+        eliminationProb.setPaintTicks(true);
+        eliminationProb.setValue(20);
+
+        elimLabel.setText("Eliminacja (%)");
+
+        jLabel10.setText("Prawdopodobieństwo (%)");
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel11.setText("Chromosom");
+
+        chromTypeButtons.add(verticeButton);
+        verticeButton.setSelected(true);
+        verticeButton.setText("Węzły");
+        verticeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                crossPobFieldActionPerformed(evt);
+                verticeButtonActionPerformed(evt);
             }
         });
+
+        chromTypeButtons.add(edgeButton);
+        edgeButton.setText("Krawędzie");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,109 +183,118 @@ public class OptionsUIGenetic extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(heurBox)
-                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(moveButton)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(41, 41, 41)
-                                    .addComponent(populationField))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(generationField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(rouletteButton))
-                            .addComponent(tourneeButton)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(rouletteButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(eliminationProb, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(tourneeButton)
+                                .addGap(50, 50, 50)
+                                .addComponent(elimLabel))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
-                                    .addComponent(regularButton))
-                                .addGap(26, 26, 26)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(mutationProbField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7)
-                                            .addComponent(jLabel8)
-                                            .addComponent(crossPobField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(oxButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pmxButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(splitButton))
-                .addContainerGap(19, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(saveButton)
+                                        .addComponent(verticeButton)
+                                        .addGap(32, 32, 32)
+                                        .addComponent(edgeButton))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel4)
+                                                .addGap(41, 41, 41)
+                                                .addComponent(populationField))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel5)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(generationField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(saveButton))))
+                            .addComponent(heurBox, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(oxButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(splitButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(crossingProb, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel10)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(mutationProb, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(heurBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pmxButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(oxButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(splitButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regularButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(crossPobField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mutationProbField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(splitButton))
+                    .addComponent(crossingProb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(moveButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mutationProb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tourneeButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tourneeButton)
+                    .addComponent(elimLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rouletteButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(eliminationProb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rouletteButton))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel11)
+                .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(verticeButton)
+                    .addComponent(edgeButton))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(populationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(generationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(saveButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(generationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(saveButton)
+                        .addGap(21, 21, 21))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void pmxButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmxButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pmxButtonActionPerformed
-
-    private void regularButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regularButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regularButtonActionPerformed
 
     private void populationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populationFieldActionPerformed
         // TODO add your handling code here:
@@ -269,119 +304,215 @@ public class OptionsUIGenetic extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_generationFieldActionPerformed
 
-    private void mutationProbFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mutationProbFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mutationProbFieldActionPerformed
-
-    private void crossPobFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crossPobFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_crossPobFieldActionPerformed
-
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        if (MainGUI.optRouter == 4) {
 
-             MainGUI.opt.heuristic = heurBox.isSelected();
-             if(pmxButton.isSelected())
-                MainGUI.opt.crossing = 0;
-             if(oxButton.isSelected())
-                 MainGUI.opt.crossing = 1;
-             if(splitButton.isSelected())
-                 MainGUI.opt.crossing = 2;
-             
-             if(regularButton.isSelected())
-                 MainGUI.opt.mutation = 0;
-             if(moveButton.isSelected())
-                 MainGUI.opt.mutation = 1;
-             
-             if(tourneeButton.isSelected())
-                 MainGUI.opt.selection = 0;
-             if(rouletteButton.isSelected())
-                 MainGUI.opt.selection = 1;
-                         
-             MainGUI.opt.population = Integer.parseInt(populationField.getText()); 
-             MainGUI.opt.generations = Integer.parseInt(generationField.getText()); 
-             MainGUI.opt.crossP = Double.parseDouble(crossPobField.getText()); 
-             MainGUI.opt.mutationP = Double.parseDouble(mutationProbField.getText()); 
-             
+        if (MainGUI.optRouter == 0) {
 
+            MainGUI.opt0.nPopulation = Integer.parseInt(this.populationField.getText());
+            MainGUI.opt0.nGeneration = Integer.parseInt(generationField.getText());
+
+            if (oxButton.isSelected()) {
+                MainGUI.opt0.crossingType = 0;
+            } else {
+                MainGUI.opt0.crossingType = 1;
+            }
+
+            if (verticeButton.isSelected()) {
+                MainGUI.opt0.chromosomeType = 0;
+            } else {
+                MainGUI.opt0.chromosomeType = 1;
+            }
+
+            if (this.tourneeButton.isSelected()) {
+                MainGUI.opt0.selectionType = 0;
+            } else {
+                MainGUI.opt0.selectionType = 1;
+            }
+
+            MainGUI.opt0.heuristic = this.heurBox.isSelected();
+
+            MainGUI.opt0.crossP = this.crossingProb.getValue()/(double)100;
+            MainGUI.opt0.mutationP = this.mutationProb.getValue()/(double)100;
+            MainGUI.opt0.eliminationP = this.eliminationProb.getValue()/(double)100;
         }
-        if (MainGUI.optRouter == 4) {
-                         MainGUI.opt.heuristic = heurBox.isSelected();
-             if(pmxButton.isSelected())
-                MainGUI.opt1.crossing = 0;
-             if(oxButton.isSelected())
-                 MainGUI.opt1.crossing = 1;
-             if(splitButton.isSelected())
-                 MainGUI.opt1.crossing = 2;
-             
-             if(regularButton.isSelected())
-                 MainGUI.opt1.mutation = 0;
-             if(moveButton.isSelected())
-                 MainGUI.opt1.mutation = 1;
-             
-             if(tourneeButton.isSelected())
-                 MainGUI.opt1.selection = 0;
-             if(rouletteButton.isSelected())
-                 MainGUI.opt1.selection = 1;
-                         
-             MainGUI.opt1.population = Integer.parseInt(populationField.getText()); 
-             MainGUI.opt1.generations = Integer.parseInt(generationField.getText()); 
-             MainGUI.opt1.crossP = Integer.parseInt(crossPobField.getText()); 
-             MainGUI.opt1.mutationP = Integer.parseInt(mutationProbField.getText()); 
+
+        if (MainGUI.optRouter == 1) {
+
+            MainGUI.opt1.nPopulation = Integer.parseInt(this.populationField.getText());
+            MainGUI.opt1.nGeneration = Integer.parseInt(generationField.getText());
+
+            if (oxButton.isSelected()) {
+                MainGUI.opt1.crossingType = 0;
+            } else {
+                MainGUI.opt1.crossingType = 1;
+            }
+
+            if (verticeButton.isSelected()) {
+                MainGUI.opt1.chromosomeType = 0;
+            } else {
+                MainGUI.opt1.chromosomeType = 1;
+            }
+
+            if (this.tourneeButton.isSelected()) {
+                MainGUI.opt1.selectionType = 0;
+            } else {
+                MainGUI.opt1.selectionType = 1;
+            }
+
+            MainGUI.opt1.heuristic = this.heurBox.isSelected();
+
+            MainGUI.opt1.crossP = this.crossingProb.getValue()/(double)100;
+            MainGUI.opt1.mutationP = this.mutationProb.getValue()/(double)100;
+            MainGUI.opt1.eliminationP = this.eliminationProb.getValue()/(double)100;
         }
-        if (MainGUI.optRouter == 4) {
-                         MainGUI.opt2.heuristic = heurBox.isSelected();
-             if(pmxButton.isSelected())
-                MainGUI.opt2.crossing = 0;
-             if(oxButton.isSelected())
-                 MainGUI.opt2.crossing = 1;
-             if(splitButton.isSelected())
-                 MainGUI.opt2.crossing = 2;
-             
-             if(regularButton.isSelected())
-                 MainGUI.opt2.mutation = 0;
-             if(moveButton.isSelected())
-                 MainGUI.opt2.mutation = 1;
-             
-             if(tourneeButton.isSelected())
-                 MainGUI.opt2.selection = 0;
-             if(rouletteButton.isSelected())
-                 MainGUI.opt2.selection = 1;
-                         
-             MainGUI.opt2.population = Integer.parseInt(populationField.getText()); 
-             MainGUI.opt2.generations = Integer.parseInt(generationField.getText()); 
-             MainGUI.opt2.crossP = Integer.parseInt(crossPobField.getText()); 
-             MainGUI.opt2.mutationP = Integer.parseInt(mutationProbField.getText()); 
+        if (MainGUI.optRouter == 2) {
+
+            MainGUI.opt2.nPopulation = Integer.parseInt(this.populationField.getText());
+            MainGUI.opt2.nGeneration = Integer.parseInt(generationField.getText());
+
+            if (oxButton.isSelected()) {
+                MainGUI.opt2.crossingType = 0;
+            } else {
+                MainGUI.opt2.crossingType = 1;
+            }
+
+            if (verticeButton.isSelected()) {
+                MainGUI.opt2.chromosomeType = 0;
+            } else {
+                MainGUI.opt2.chromosomeType = 1;
+            }
+
+            if (this.tourneeButton.isSelected()) {
+                MainGUI.opt2.selectionType = 0;
+            } else {
+                MainGUI.opt2.selectionType = 1;
+            }
+
+            MainGUI.opt2.heuristic = this.heurBox.isSelected();
+
+            MainGUI.opt2.crossP = this.crossingProb.getValue()/(double)100;
+            MainGUI.opt2.mutationP = this.mutationProb.getValue()/(double)100;
+            MainGUI.opt2.eliminationP = this.eliminationProb.getValue()/(double)100;
         }
-        if (MainGUI.optRouter == 4) {
-                         MainGUI.opt3.heuristic = heurBox.isSelected();
-             if(pmxButton.isSelected())
-                MainGUI.opt3.crossing = 0;
-             if(oxButton.isSelected())
-                 MainGUI.opt3.crossing = 1;
-             if(splitButton.isSelected())
-                 MainGUI.opt3.crossing = 2;
-             
-             if(regularButton.isSelected())
-                 MainGUI.opt3.mutation = 0;
-             if(moveButton.isSelected())
-                 MainGUI.opt3.mutation = 1;
-             
-             if(tourneeButton.isSelected())
-                 MainGUI.opt3.selection = 0;
-             if(rouletteButton.isSelected())
-                 MainGUI.opt3.selection = 1;
-                         
-             MainGUI.opt3.population = Integer.parseInt(populationField.getText()); 
-             MainGUI.opt3.generations = Integer.parseInt(generationField.getText()); 
-             MainGUI.opt3.crossP = Integer.parseInt(crossPobField.getText()); 
-             MainGUI.opt3.mutationP = Integer.parseInt(mutationProbField.getText()); 
+
+        if (MainGUI.optRouter == 3) {
+
+            MainGUI.opt3.nPopulation = Integer.parseInt(this.populationField.getText());
+            MainGUI.opt3.nGeneration = Integer.parseInt(generationField.getText());
+
+            if (oxButton.isSelected()) {
+                MainGUI.opt3.crossingType = 0;
+            } else {
+                MainGUI.opt3.crossingType = 1;
+            }
+
+            if (verticeButton.isSelected()) {
+                MainGUI.opt3.chromosomeType = 0;
+            } else {
+                MainGUI.opt3.chromosomeType = 1;
+            }
+
+            if (this.tourneeButton.isSelected()) {
+                MainGUI.opt3.selectionType = 0;
+            } else {
+                MainGUI.opt3.selectionType = 1;
+            }
+
+            MainGUI.opt3.heuristic = this.heurBox.isSelected();
+
+            MainGUI.opt3.crossP = this.crossingProb.getValue()/(double)100;
+            MainGUI.opt3.mutationP = this.mutationProb.getValue()/(double)100;
+            MainGUI.opt3.eliminationP = this.eliminationProb.getValue()/(double)100;
         }
+
+        this.setVisible(false);
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void rouletteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rouletteButtonActionPerformed
-        // TODO add your handling code here:
+        this.eliminationProb.enable(false);
+        this.eliminationProb.setVisible(false);
+        this.elimLabel.setVisible(false);
     }//GEN-LAST:event_rouletteButtonActionPerformed
+
+    private void verticeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verticeButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_verticeButtonActionPerformed
+
+    private void oxButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oxButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_oxButtonActionPerformed
+
+    private void tourneeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tourneeButtonActionPerformed
+        this.eliminationProb.enable(true);
+        this.eliminationProb.setVisible(true);
+        this.elimLabel.setVisible(true);
+    }//GEN-LAST:event_tourneeButtonActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        setTexts();
+    }//GEN-LAST:event_formWindowActivated
+
+    private void crossingProbStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_crossingProbStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_crossingProbStateChanged
+
+    public void setTexts() {
+
+        String np = Integer.toString(MainGUI.opt0.nPopulation);
+        String ng = Integer.toString(MainGUI.opt0.nGeneration);
+        if (MainGUI.opt0.crossingType == 1) {
+            this.splitButton.setSelected(true);
+        }
+        if (MainGUI.opt0.chromosomeType == 1) {
+            this.edgeButton.setSelected(true);
+        }
+        if (MainGUI.opt0.selectionType == 1) {
+            this.rouletteButton.setSelected(true);
+        }
+
+        if (MainGUI.optRouter == 1) {
+            np = Integer.toString(MainGUI.opt1.nPopulation);
+            ng = Integer.toString(MainGUI.opt1.nGeneration);
+            if (MainGUI.opt1.crossingType == 1) {
+                this.splitButton.setSelected(true);
+            }
+            if (MainGUI.opt1.chromosomeType == 1) {
+                this.edgeButton.setSelected(true);
+            }
+            if (MainGUI.opt1.selectionType == 1) {
+                this.rouletteButton.setSelected(true);
+            }
+        }
+        if (MainGUI.optRouter == 2) {
+            np = Integer.toString(MainGUI.opt2.nPopulation);
+            ng = Integer.toString(MainGUI.opt2.nGeneration);
+            if (MainGUI.opt2.crossingType == 1) {
+                this.splitButton.setSelected(true);
+            }
+            if (MainGUI.opt2.chromosomeType == 1) {
+                this.edgeButton.setSelected(true);
+            }
+            if (MainGUI.opt2.selectionType == 1) {
+                this.rouletteButton.setSelected(true);
+            }
+        }
+        if (MainGUI.optRouter == 3) {
+            np = Integer.toString(MainGUI.opt3.nPopulation);
+            ng = Integer.toString(MainGUI.opt3.nGeneration);
+            if (MainGUI.opt3.crossingType == 1) {
+                this.splitButton.setSelected(true);
+            }
+            if (MainGUI.opt3.chromosomeType == 1) {
+                this.edgeButton.setSelected(true);
+            }
+            if (MainGUI.opt3.selectionType == 1) {
+                this.rouletteButton.setSelected(true);
+            }
+        }
+        this.populationField.setText(np);
+        this.generationField.setText(ng);
+
+    }
 
     /**
      * @param args the command line arguments
@@ -421,29 +552,31 @@ public class OptionsUIGenetic extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.ButtonGroup buttonGroup3;
-    private javax.swing.JTextField crossPobField;
+    private javax.swing.ButtonGroup chromTypeButtons;
+    private javax.swing.ButtonGroup crossingButtons;
+    private javax.swing.JSlider crossingProb;
+    private javax.swing.JRadioButton edgeButton;
+    private javax.swing.JLabel elimLabel;
+    private javax.swing.ButtonGroup eliminationButtons;
+    private javax.swing.JSlider eliminationProb;
     private javax.swing.JTextField generationField;
     private javax.swing.JCheckBox heurBox;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JRadioButton moveButton;
-    private javax.swing.JTextField mutationProbField;
+    private javax.swing.JSlider mutationProb;
     private javax.swing.JRadioButton oxButton;
-    private javax.swing.JRadioButton pmxButton;
     private javax.swing.JTextField populationField;
-    private javax.swing.JRadioButton regularButton;
     private javax.swing.JRadioButton rouletteButton;
     private javax.swing.JButton saveButton;
     private javax.swing.JRadioButton splitButton;
     private javax.swing.JRadioButton tourneeButton;
+    private javax.swing.JRadioButton verticeButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -21,7 +21,8 @@ public class Generator {
 
     public static Graph generate(int vectN) {
         Graph G = new Graph();
-        int maxVect = 500 + 10 * vectN;
+
+        int maxVect = 500 + 50 * vectN;
         List<Vertice> vertices = new ArrayList<Vertice>();
 
         boolean collisionDetected = false;
@@ -34,8 +35,9 @@ public class Generator {
             int x = generator.nextInt(maxVect);
             int y = generator.nextInt(maxVect);
             for (int v = 0; v < vertices.size(); v++) {
-                if (Math.sqrt(Math.pow(vertices.get(v).getX() - x, 2) + Math.pow(vertices.get(v).getY() - y, 2)) < maxVect / 30) {
+                if (Math.hypot(vertices.get(v).getX() - x, vertices.get(v).getY() - y) < maxVect / 50) {
                     collisionDetected = true;
+
                 }
             }
             while (collisionDetected == true) {
@@ -43,8 +45,9 @@ public class Generator {
                 x = generator.nextInt(maxVect);
                 y = generator.nextInt(maxVect);
                 for (int v = 0; v < vertices.size(); v++) {
-                    if (Math.hypot(vertices.get(v).getX() - x, vertices.get(v).getY() - y) < maxVect / 30) {
+                    if (Math.hypot(vertices.get(v).getX() - x, vertices.get(v).getY() - y) < maxVect / 50) {
                         collisionDetected = true;
+                        maxVect += 10;
                     }
                 }
             }
@@ -74,7 +77,8 @@ public class Generator {
                 for (int ve3 = 0; ve3 < closestVert.size(); ve3++) {
                     if (Math.hypot(closestVert.get(ve3).x - vertices.get(ve).x, closestVert.get(ve3).y - vertices.get(ve).y)
                             > Math.hypot(vertices.get(ve2).x - vertices.get(ve).x, vertices.get(ve2).y - vertices.get(ve).y)
-                            && vertices.get(ve).id != vertices.get(ve2).id) {
+                            && vertices.get(ve).id != vertices.get(ve2).id
+                            && vertices.get(ve2).id != 0) {
 
                         for (int ve4 = edgeN - 1; ve4 > ve3; ve4--) {
                             closestVert.set(ve4, closestVert.get(ve4 - 1));
@@ -109,9 +113,46 @@ public class Generator {
                 vertices.get(B).connected.add(A);
             }
         }
-        
+
         G.verticesList = vertices;
         G.edgesList = edges;
+
+        if (!integrityCheck(G)) {
+            G = generate(vectN);
+        }
+
         return G;
+    }
+
+    public static boolean integrityCheck(Graph G) {
+
+        boolean[] visited = new boolean[G.verticesList.size()];
+        int count = 0;
+
+        List<Vertice> verticesHeap = new ArrayList<Vertice>();
+
+        for (int i = 0; i < visited.length; i++) {
+            visited[i] = false;
+        }
+        visited[0] = true;
+
+        count += 1;
+        verticesHeap.add(G.verticesList.get(0));
+
+        while (!verticesHeap.isEmpty()) {
+            for (int i = 0; i < verticesHeap.get(0).connected.size(); i++) {
+                if (visited[verticesHeap.get(0).connected.get(i)] == false) {
+                    verticesHeap.add(G.verticesList.get(verticesHeap.get(0).connected.get(i)));
+                    visited[verticesHeap.get(0).connected.get(i)] = true;
+                    count += 1;
+                }
+            }
+            verticesHeap.remove(0);
+        }
+        if (count != G.verticesList.size()) {
+            return false;
+        }
+
+        return true;
     }
 }

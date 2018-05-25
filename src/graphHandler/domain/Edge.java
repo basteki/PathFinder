@@ -1,12 +1,13 @@
 package graphHandler.domain;
 
 public class Edge {
+
     int id;
     int A;
     int B;
     double weight;
     boolean oneWay;
-    
+
     public void setId(int id) {
         this.id = id;
     }
@@ -30,7 +31,7 @@ public class Edge {
     public int getB() {
         return this.B;
     }
-    
+
     public void setWeight(double weight) {
         this.weight = weight;
     }
@@ -38,7 +39,7 @@ public class Edge {
     public double getWeight() {
         return this.weight;
     }
-    
+
     public void setOneWay(boolean oneWay) {
         this.oneWay = oneWay;
     }

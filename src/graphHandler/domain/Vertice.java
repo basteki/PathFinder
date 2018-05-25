@@ -1,4 +1,3 @@
-
 package graphHandler.domain;
 
 import java.util.List;
@@ -11,7 +10,6 @@ public class Vertice {
     public List<Integer> connected;
     public Double weight;
 
-        
     public void setId(int id) {
         this.id = id;
     }
