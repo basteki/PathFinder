@@ -21,12 +21,12 @@ import pathfinder.PathFinder;
 public class Genetic {
 
     private int optimalGeneration;
-    public  List<Integer> optimalPath = new ArrayList<>();
-    public  double lowestWeightGlobal = Double.POSITIVE_INFINITY;
+    public List<Integer> optimalPath = new ArrayList<>();
+    public double lowestWeightGlobal = Double.POSITIVE_INFINITY;
 
     public List<Integer> findWay(int start, int finish, Graph graph, Options opt) {
 
-       int populationCount = opt.nPopulation;
+        int populationCount = opt.nPopulation;
         int nGeneration = opt.nGeneration;
         int crossingType = opt.crossingType;
         int chromosomeType = opt.chromosomeType;
@@ -44,8 +44,6 @@ public class Genetic {
         List<Double> fitness = new ArrayList<>();
         List<Double> heuristicList = new ArrayList<>();
 
-        
-         
         //1Inicjalizacja heurystyki
         if (heur == true) {
             for (int i = 0; i < graph.verticesList.size(); i++) {
@@ -59,7 +57,7 @@ public class Genetic {
 
             }
         }
-        
+
         //1
         //2Chromosomy pierwszej populacji
         if (chromosomeType == 0) {
@@ -71,7 +69,7 @@ public class Genetic {
                 fitness.add(MainGUI.measurePath(chromosome));
                 PathFinder.operationCount++;
             }
-            
+
         }
         if (chromosomeType == 1) {
 
@@ -107,15 +105,15 @@ public class Genetic {
             //4 wybierz rodziców
             chromosomes = selectNextPop(graph, selectionType, eliminationP, chromosomes, fitness);
 
-                //4
+            //4
             //5 Krzyzuj
             //System.out.println("5 " + chromosomes.size());
             if (crossingType == 0) {
                 chromosomes = oxCrossing(graph, chromosomes, crossP);
-                
+
             }
             if (crossingType == 1) {
-                chromosomes = splitCrossing(graph, chromosomes, crossP);
+                chromosomes = splitCrossing(graph, chromosomes, crossP, chromosomeType);
 
             }
             PathFinder.operationCount++;
@@ -125,8 +123,79 @@ public class Genetic {
             chromosomes = mutate(chromosomes, mutationP);
             //
             //7Napraw Ścieżki
+            chromosomes = this.fixChromosomes(start, finish, chromosomes, chromosomeType, populationCount, graph, heuristicList);
             // System.out.println("7 " + chromosomes.size());
+
+            //
+            for (int j = 0; j < chromosomes.size() - 1; j++) {
+                PathFinder.operationCount++;
+                if (chromosomeType == 0) {
+
+                    if (MainGUI.measurePath(chromosomes.get(j)) < lowestWeightGlobal 
+                            && chromosomes.get(j).contains(finish) 
+                            && chromosomes.get(j).contains(start) 
+                            && chromosomes.get(j).size() != 0
+                            && MainGUI.measurePath(chromosomes.get(j)) != 0.0) {
+                        lowestWeightGlobal = MainGUI.measurePath(chromosomes.get(j));
+                        optimalGeneration = i;
+
+                        optimalPath = chromosomes.get(j);
+                    }
+                }
+
+                if (chromosomeType == 1) {
+                    if (lowestWeightGlobal > measurePathByEdge(chromosomes.get(j), start, finish) && measurePathByEdge(chromosomes.get(j), start, finish) != 0) {
+                        lowestWeightGlobal = measurePathByEdge(chromosomes.get(j), start, finish);
+
+                        optimalGeneration = i;
+
+                        optimalPath = chromosomes.get(j);
+                    }
+                }
+
+            }
+            //3
+        }
+
+        double lowestWeight = Double.POSITIVE_INFINITY;
+
+        for (int j = 0; j < chromosomes.size(); j++) {
+
             if (chromosomeType == 0) {
+
+                if (lowestWeight > MainGUI.measurePath(chromosomes.get(j)) && chromosomes.get(j).contains(finish)) {
+                    lowestWeight = MainGUI.measurePath(chromosomes.get(j));
+
+                    path = chromosomes.get(j);
+                    if (MainGUI.measurePath(path) < MainGUI.measurePath(optimalPath ) || optimalPath == null || MainGUI.measurePath(optimalPath) == 0.0) {
+                        optimalPath = path;
+                    }
+                }
+
+            }
+
+            if (chromosomeType == 1) {
+                if (lowestWeight > measurePathByEdge(chromosomes.get(j), start, finish) && measurePathByEdge(chromosomes.get(j), start, finish) != 0.0) {
+                    lowestWeight = measurePathByEdge(chromosomes.get(j), start, finish);
+
+                    path = chromosomes.get(j);
+                }
+            }
+
+            PathFinder.operationCount++;
+        }
+        if (chromosomeType == 1) {
+
+            path = this.pathTransform(path, start, finish);
+            optimalPath = this.pathTransform(optimalPath, start, finish);
+
+        }
+       
+        return path;
+    }
+
+    private List<List<Integer>> fixChromosomes(int start, int finish, List<List<Integer>> chromosomes, int chromosomeType, int populationCount, Graph graph, List<Double> heuristicList) {
+        if (chromosomeType == 0) {
 //                for (int j = 0; j < chromosomes.size() - 1; j++) {
 //                    for (int k = 0; k < chromosomes.get(j).size() - 1; k++) {
 //                        if (!graph.verticesList.get(chromosomes.get(j).get(k)).connected.contains(chromosomes.get(j).get(k + 1))) {
@@ -152,118 +221,66 @@ public class Genetic {
 //
 //                }
 
-                while (chromosomes.size() != populationCount) {
-                    chromosomes.add(this.randomizeChromosomeVert(start, finish, graph, heuristicList));
-                    PathFinder.operationCount++;
-                }
-
-            }
-            if (chromosomeType == 1) {
-
-                int currentStepId = start;
-                
-                for (int j = 0; j < chromosomes.size(); j++) {
-                    PathFinder.operationCount++;
-                    if(measurePathByEdge(chromosomes.get(j), start, finish) == 0.0){
-                        chromosomes.set(j, randomizeChromosomeEdge(start, finish, graph, heuristicList));
-                    }
-                    
-                    boolean fixed = false;
-                    
-                    while (fixed) {
-
-                        for (int k = 0; k < chromosomes.get(j).size(); k++) {
-                            if (!graph.verticesList.get(currentStepId).connected.contains(chromosomes.get(j).get(k))) {
-                                Random gen = new Random();
-                                int rAllel = gen.nextInt(graph.verticesList.get(currentStepId).connected.size() - 1);
-                                chromosomes.get(j).set(k, rAllel);
-
-                                currentStepId = graph.verticesList.get(currentStepId).connected.get(rAllel);
-                            }
-                        }
-                        if (currentStepId == finish) {
-                            fixed = true;
-                        }
-                        if (currentStepId != finish) {
-                            chromosomes.get(j).addAll(randomizeChromosomeEdge(currentStepId, finish, graph, heuristicList));
-                            PathFinder.operationCount++;
-                        }
-
-                    }
-                }
-                while (chromosomes.size() != populationCount) {
-                    chromosomes.add(this.randomizeChromosomeEdge(start, finish, graph, heuristicList));
-                }
-                 
-            }
-
-            //
-            for (int j= 0; j < chromosomes.size()-1; j++) {
+            while (chromosomes.size() != populationCount) {
+                chromosomes.add(this.randomizeChromosomeVert(start, finish, graph, heuristicList));
                 PathFinder.operationCount++;
-                if (chromosomeType == 0) {
-                    
-                    if (MainGUI.measurePath(chromosomes.get(j)) < lowestWeightGlobal && chromosomes.get(j).contains(finish) && MainGUI.measurePath(chromosomes.get(j)) != 0.0) {
-                        lowestWeightGlobal = MainGUI.measurePath(chromosomes.get(j));
-                        optimalGeneration = i;
-                                           
-                        optimalPath = chromosomes.get(j);
-                    }
-                }
-             
-                if (chromosomeType == 1) {
-                    if (lowestWeightGlobal > measurePathByEdge(chromosomes.get(j), start, finish) && measurePathByEdge(chromosomes.get(j), start, finish) !=0 ) {
-                        lowestWeightGlobal = measurePathByEdge(chromosomes.get(j), start, finish);
-                         
-                        optimalGeneration = i;
-
-                        optimalPath = chromosomes.get(j);
-                    }
-                }
-
             }
-            //3
-        }
 
-        double lowestWeight = Double.POSITIVE_INFINITY;
-
-        for (int j = 0; j < chromosomes.size(); j++) {
-            
-            if (chromosomeType == 0) {
-               
-                if (lowestWeight > MainGUI.measurePath(chromosomes.get(j)) && chromosomes.get(j).contains(finish) ) {
-                    lowestWeight = MainGUI.measurePath(chromosomes.get(j));
-
-                    path = chromosomes.get(j);
-                }
-                if (chromosomeType == 1) {
-                    if (lowestWeight > measurePathByEdge(chromosomes.get(j), start, finish) && measurePathByEdge(chromosomes.get(j), start, finish) !=0.0 ) {
-                        lowestWeight = measurePathByEdge(chromosomes.get(j), start, finish);
-                        
-                        path = chromosomes.get(j);
-                    }
-                }
-            }
-            PathFinder.operationCount++;
         }
         if (chromosomeType == 1) {
-            path = this.randomizeChromosomeEdge(start, finish, graph, heuristicList);
-            List<Integer> edgePath = new ArrayList<>();
-            edgePath.add(start);
-            int curr = start;
-            int ic = 0;
-            while (ic < path.size()) {
-                edgePath.add(graph.verticesList.get(curr).connected.get(path.get(ic)));
-                curr = graph.verticesList.get(curr).connected.get(path.get(ic));
-                ic++;
+
+            for (int j = 0; j < chromosomes.size(); j++) {
+
+                int currentStepId = start;
+
+                PathFinder.operationCount++;
+                if (measurePathByEdge(chromosomes.get(j), start, finish) == 0.0 || chromosomes.get(j).size() == 0) {
+                    chromosomes.set(j, randomizeChromosomeEdge(start, finish, graph, heuristicList));
+                }
+
+                boolean fixed = false;
+
+                while (!fixed) {
+
+                    for (int k = 0; k < chromosomes.get(j).size() - 1; k++) {
+                            //System.out.println("j " + j + " k " + chromosomes.get(j).get(k) + "    ID " + currentStepId);
+
+                        if (graph.verticesList.get(currentStepId).connected.size() < chromosomes.get(j).get(k) - 1) {
+                            Random gen = new Random();
+                            int rAllel = gen.nextInt(graph.verticesList.get(currentStepId).connected.size() - 1);
+                            chromosomes.get(j).set(k, rAllel);
+
+                            currentStepId = graph.verticesList.get(currentStepId).connected.get(rAllel);
+                        } else {
+                            currentStepId = graph.verticesList.get(currentStepId).connected.get(chromosomes.get(j).get(k));
+                        }
+
+                    }
+                    if (currentStepId == finish) {
+                           // System.out.println("koniec");
+
+                        fixed = true;
+                    }
+                    if (currentStepId != finish) {
+                        chromosomes.get(j).addAll(randomizeChromosomeEdge(currentStepId, finish, graph, heuristicList));
+                        PathFinder.operationCount++;
+                        fixed = true;
+                    }
+
+                }
             }
-            path = edgePath;
+            while (chromosomes.size() != populationCount) {
+                chromosomes.add(this.randomizeChromosomeEdge(start, finish, graph, heuristicList));
+            }
+
         }
 
-        return path;
+        return chromosomes;
     }
 
     private List<Integer> randomizeChromosomeVert(int start, int finish, Graph graph, List<Double> heuristicList) {
-        //System.out.println("1.1");
+PathFinder.operationCount++;        
+//System.out.println("1.1");
         List<Integer> chromosome = new ArrayList<>();
         chromosome.add(start);
 
@@ -302,6 +319,7 @@ public class Genetic {
     }
 
     private List<Integer> randomizeChromosomeEdge(int start, int finish, Graph graph, List<Double> heuristicList) {
+        PathFinder.operationCount++;
         List<Integer> path = new ArrayList<>();
         List<Integer> chromosome = new ArrayList<>();
 
@@ -373,7 +391,7 @@ public class Genetic {
         double weight = 0.0;
 
         List<Integer> realPath = new ArrayList<>();
-        
+
         int currentStepId = start;
 
         for (int i = 0; i < path.size() - 1; i++) {
@@ -381,7 +399,7 @@ public class Genetic {
             if (path.get(i) >= PathFinder.graph.verticesList.get(currentStepId).connected.size()) {
                 path.set(i, PathFinder.graph.verticesList.get(currentStepId).connected.size() - 1);
             }
-            
+
             int nextStepId = PathFinder.graph.verticesList.get(currentStepId).connected.get(path.get(i));
             realPath.add(currentStepId);
 //            Vertice currentStep = PathFinder.graph.verticesList.get(currentStepId);
@@ -396,6 +414,7 @@ public class Genetic {
     }
 
     private List<List<Integer>> selectNextPop(Graph graph, int selectionType, double crossP, List<List<Integer>> chromosomes, List<Double> fitness) {
+        PathFinder.operationCount++;
         List<List<Integer>> chosenChromosomes = new ArrayList<>();
 
         int cap = (int) (fitness.size() * (100 - crossP) / 100);
@@ -463,7 +482,7 @@ public class Genetic {
             int co = 0;
             while (chosenChromosomesRoulette.size() != chromosomes.size()) {
                 chosenChromosomesRoulette.add(chromosomes.get(roulette(fitnessTab)));
-           
+
                 co++;
             }
 
@@ -474,7 +493,8 @@ public class Genetic {
         return chosenChromosomes;
     }
 
-    private List<List<Integer>> splitCrossing(Graph graph, List<List<Integer>> chromosomes, double crossP) {
+    private List<List<Integer>> splitCrossing(Graph graph, List<List<Integer>> chromosomes, double crossP, int chromosomeType) {
+        PathFinder.operationCount++;
         List<List<Integer>> newChromosomes = new ArrayList<>();
         Random generator = new Random();
 
@@ -495,24 +515,25 @@ public class Genetic {
                 int split = generator.nextInt(chromosomes.get(parentAid).size());
                 boolean commonJointFound = false;
                 int splitValue = chromosomes.get(parentAid).get(split);
+                if (chromosomeType == 0) {
+                    for (int j = 0; j < graph.verticesList.size(); j++) {
+                        if (chromosomes.get(parentAid).contains(graph.verticesList.get(j).id)
+                                && chromosomes.get(parentBid).contains(graph.verticesList.get(j).id)) {
+                            if (graph.verticesList.get(j).id != chromosomes.get(parentBid).get(0)
+                                    && graph.verticesList.get(j).id != chromosomes.get(parentAid).get(chromosomes.get(parentAid).size() - 1)) {
+                                splitValue = graph.verticesList.get(j).id;
 
-                for (int j = 0; j < graph.verticesList.size(); j++) {
-                    if (chromosomes.get(parentAid).contains(graph.verticesList.get(j).id)
-                            && chromosomes.get(parentBid).contains(graph.verticesList.get(j).id)) {
-                        if (graph.verticesList.get(j).id != chromosomes.get(parentBid).get(0)
-                                && graph.verticesList.get(j).id != chromosomes.get(parentAid).get(chromosomes.get(parentAid).size() - 1)) {
-                            splitValue = graph.verticesList.get(j).id;
+                                for (int k = 0; k < chromosomes.get(parentAid).size(); k++) {
 
-                            for (int k = 0; k < chromosomes.get(parentAid).size(); k++) {
-
-                                if (chromosomes.get(parentAid).get(k) == splitValue) {
-                                    split = k;
+                                    if (chromosomes.get(parentAid).get(k) == splitValue) {
+                                        split = k;
+                                    }
+                                    commonJointFound = true;
                                 }
-                                commonJointFound = true;
                             }
                         }
-                    }
 
+                    }
                 }
                 if (!commonJointFound) {
                     while (!(chromosomes.get(parentAid).contains(splitValue) || chromosomes.get(parentBid).contains(splitValue))) {
@@ -547,6 +568,7 @@ public class Genetic {
     }
 
     private List<List<Integer>> oxCrossing(Graph graph, List<List<Integer>> chromosomes, double crossP) {
+        PathFinder.operationCount++;
         List<List<Integer>> newChromosomes = new ArrayList<>();
 
         int chromCount = 0;
@@ -583,7 +605,6 @@ public class Genetic {
                 int k1R = (int) ((double) chromosomeMult * (double) k1);
                 int k2R = (int) ((double) chromosomeMult * (double) k2);
 
-               
                 for (int i = 0; i < k1; i++) {
                     chromosome.add(chromosomes.get(parentAid).get(i));
                 }
@@ -602,12 +623,14 @@ public class Genetic {
     }
 
     private List<List<Integer>> mutate(List<List<Integer>> chromosomes, double mutP) {
+        
         List<List<Integer>> mutatedChromosomes = new ArrayList<>();
 
         for (int i = 0; i < chromosomes.size(); i++) {
             Random generator = new Random();
             double r = generator.nextDouble();
             if (r < mutP) {
+                PathFinder.operationCount++;
                 int max = 1;
                 for (int j = 0; j < chromosomes.get(i).size(); j++) {
                     if (chromosomes.get(i).get(j) > max) {
@@ -624,6 +647,22 @@ public class Genetic {
         }
 
         return mutatedChromosomes;
+    }
+
+    public List<Integer> pathTransform(List<Integer> path, int start, int finish) {
+        List<Integer> edgePath = new ArrayList<>();
+        edgePath.add(start);
+        int curr = start;
+        int ic = 0;
+        while (curr != finish) {
+            edgePath.add(PathFinder.graph.verticesList
+                    .get(curr).connected
+                    .get(path.get(ic)));
+            curr = PathFinder.graph.verticesList.get(curr).connected.get(path.get(ic));
+            ic++;
+        }
+        path = edgePath;
+        return path;
     }
 
     public int getOptimalGen() {

@@ -27,8 +27,6 @@ public class AntSwarm {
         double distancePriority = opt.distancePriority;
         double randomFactor = opt.randomFactor;
 
-        System.out.println("ColonyCount" + MainGUI.opt0.initialAntCount);
-        System.out.println("ColonyCount" + MainGUI.opt1.initialAntCount);
 
         PathFinder.operationCount = 0;
         List<Integer> path = new ArrayList<>();
@@ -71,7 +69,7 @@ public class AntSwarm {
             finalAnt = createAnt(start, finish, graph, stallmateBreaker, pheromones);
             stallmateBreaker += 0.05;
         }
-        finalAnt.remove(finish);
+        finalAnt.remove(finalAnt.size()-1);
         return finalAnt;
     }
 

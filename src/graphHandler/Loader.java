@@ -66,7 +66,7 @@ public class Loader {
         }
         if (!integrityCheck(G)) {
             JOptionPane.showMessageDialog(null, "Wczytany graf nie jest spójny, stworzono losowy graf");
-            G = generate(20);
+            G = generate(20,3);
         }
         return G;
     }

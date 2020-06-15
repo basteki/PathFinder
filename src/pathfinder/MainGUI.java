@@ -99,8 +99,10 @@ public class MainGUI extends javax.swing.JFrame {
         statsTextArea3 = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
         statsTextArea1 = new javax.swing.JTextArea();
+        generatedGraphNodeCounter = new javax.swing.JSlider();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         startButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         startButton.setText("Szukaj");
@@ -291,6 +293,15 @@ public class MainGUI extends javax.swing.JFrame {
         statsTextArea1.setText("Czas(ms):\t\t\nIlość operacji:\nDługość trasy:\nZnaleziona trasa:");
         jScrollPane4.setViewportView(statsTextArea1);
 
+        generatedGraphNodeCounter.setMajorTickSpacing(2);
+        generatedGraphNodeCounter.setMaximum(8);
+        generatedGraphNodeCounter.setMinimum(1);
+        generatedGraphNodeCounter.setMinorTickSpacing(1);
+        generatedGraphNodeCounter.setPaintLabels(true);
+        generatedGraphNodeCounter.setPaintTicks(true);
+        generatedGraphNodeCounter.setSnapToTicks(true);
+        generatedGraphNodeCounter.setValue(4);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -306,74 +317,6 @@ public class MainGUI extends javax.swing.JFrame {
                         .addComponent(verticeNLabel)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(13, 13, 13)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(1, 1, 1)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(startEndLabel)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(startTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(18, 18, 18)
-                                                        .addComponent(endTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                            .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(verticeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(24, 24, 24))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(saveNameTextField)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(saveLabel, javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(algorithmTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(optionButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(threadLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(threadComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(algorithmTypeComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(optionButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(algorithmTypeComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(optionButton2))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(algorithmTypeComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(optionButton3)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(graphLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -384,7 +327,82 @@ public class MainGUI extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(algorithmLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(115, 115, 115)))))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(startEndLabel)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(startTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(endTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(verticeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(saveNameTextField)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(saveLabel, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(generatedGraphNodeCounter, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(threadLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(threadComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(algorithmTypeComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(optionButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(algorithmTypeComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(optionButton2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(algorithmTypeComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(optionButton3)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(algorithmTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(optionButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -406,7 +424,7 @@ public class MainGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(verticeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(generateButton))
+                        .addComponent(generatedGraphNodeCounter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -417,10 +435,12 @@ public class MainGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(algorithmTypeComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(optionButton1))
-                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(algorithmTypeComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(optionButton1))
+                            .addComponent(generateButton))
+                        .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(saveLabel)
@@ -465,20 +485,40 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
 
-        long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();       
+        
+        
         PathFinder.path = startSelectedAlgorithm(algorithmTypeComboBox, 0);
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
+        
+        double dopSum =measurePath(PathFinder.path);
+        
+        List<Integer> optPath1 = (List) this.optGenPath[0];
+        int genSum = this.optGenGen[0];
+                
+        
         stats[0][0] = Long.toString(elapsedTime) + "(ms)";
         stats[0][1] = String.valueOf(PathFinder.operationCount);
 
-        stats[0][2] = String.format("%.3f", measurePath(PathFinder.path));
-        if (this.algorithmTypeComboBox.getSelectedIndex() == 4) {
+        
+
+        if (this.algorithmTypeComboBox.getSelectedIndex() == 4 ) {
             List<Integer> optPath = (List) this.optGenPath[0];
-            stats[0][2] = String.format("%.3f, ( %.3f - " + this.optGenGen[0] + " generacja )", measurePath(PathFinder.path), measurePath(optPath));
+            stats[0][2] = String.format("%.3f, ( %.3f - " + this.optGenGen[0] + 
+                    " generacja )", measurePath(PathFinder.path), measurePath(optPath));
             
-           
         }
+        else{
+            stats[0][2] = String.format("%.3f", measurePath(PathFinder.path));
+        }
+//        if (this.algorithmTypeComboBox.getSelectedIndex() == 4 ) {
+//            List<Integer> optPath = (List) this.optGenPath[0];
+//            stats[0][2] = String.format("%.3f, (Ś%.3f - " + gen + 
+//                    " generacja )", measurePath(PathFinder.path), dop);
+//            
+//        }
+        
         stats[0][3] = PathFinder.path.get(0).toString();
         for (int i = 1; i < PathFinder.path.size(); i++) {
             stats[0][3] += "-" + PathFinder.path.get(i).toString();
@@ -491,10 +531,14 @@ public class MainGUI extends javax.swing.JFrame {
             elapsedTime = stopTime - startTime;
             stats[1][0] = Long.toString(elapsedTime) + "(ms)";
             stats[1][1] = String.valueOf(PathFinder.operationCount);
-            stats[1][2] = String.format("%.3f", measurePath(PathFinder.path1));
+            
             if (this.algorithmTypeComboBox1.getSelectedIndex() == 4) {
                 List<Integer> optPath = (List) this.optGenPath[1];
-                stats[1][2] = String.format("%.3f, ( %.3f - " + this.optGenGen[1] + " generacja )", measurePath(PathFinder.path), measurePath(optPath));
+                stats[1][2] = String.format("%.3f, ( %.3f - " + this.optGenGen[1] + 
+                        " generacja )", measurePath(PathFinder.path1), measurePath(optPath));
+            }
+            else{
+                stats[1][2] = String.format("%.3f", measurePath(PathFinder.path1));
             }
             stats[1][3] = PathFinder.path1.get(0).toString();
             for (int i = 1; i < PathFinder.path1.size(); i++) {
@@ -510,8 +554,9 @@ public class MainGUI extends javax.swing.JFrame {
             stats[2][1] = String.valueOf(PathFinder.operationCount);
             stats[2][2] = String.format("%.3f", measurePath(PathFinder.path2));
              if (this.algorithmTypeComboBox2.getSelectedIndex() == 4) {
-                List<Integer> optPath = (List) this.optGenPath[2];
-                stats[2][2] = String.format("%.3f, ( %.3f - " + this.optGenGen[2] + " generacja )", measurePath(PathFinder.path), measurePath(optPath));
+                 List<Integer> optPath = (List) this.optGenPath[2];
+                stats[2][2] = String.format("%.3f, ( %.3f - " + this.optGenGen[2] + 
+                        " generacja )", measurePath(PathFinder.path2), measurePath(optPath));
             }
             stats[2][3] = PathFinder.path2.get(0).toString();
             for (int i = 1; i < PathFinder.path2.size(); i++) {
@@ -527,8 +572,9 @@ public class MainGUI extends javax.swing.JFrame {
             stats[3][1] = String.valueOf(PathFinder.operationCount);
             stats[3][2] = String.format("%.3f", measurePath(PathFinder.path3));
              if (this.algorithmTypeComboBox3.getSelectedIndex() == 4) {
-                List<Integer> optPath = (List) this.optGenPath[3];
-                stats[3][2] = String.format("%.3f, ( %.3f - " + this.optGenGen[3] + " generacja )", measurePath(PathFinder.path), measurePath(optPath));
+                 List<Integer> optPath = (List) this.optGenPath[3];
+                stats[3][2] = String.format("%.3f, ( %.3f - " + this.optGenGen[3] + 
+                        " generacja )", measurePath(PathFinder.path3), measurePath(optPath));
             }
             stats[3][3] = PathFinder.path1.get(0).toString();
             
@@ -665,7 +711,7 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_loadButtonActionPerformed
 
     private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
-        PathFinder.graph = Generator.generate(verticeSlider.getValue());
+        PathFinder.graph = Generator.generate(verticeSlider.getValue(), generatedGraphNodeCounter.getValue() );
         PathFinder.graphUI.reset();
         PathFinder.path = new ArrayList<Integer>();
         PathFinder.path1 = new ArrayList<Integer>();
@@ -882,6 +928,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox algorithmTypeComboBox3;
     private javax.swing.JTextField endTextField;
     private javax.swing.JButton generateButton;
+    private javax.swing.JSlider generatedGraphNodeCounter;
     private javax.swing.JLabel graphLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
